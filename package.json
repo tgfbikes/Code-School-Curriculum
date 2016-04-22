@@ -15,5 +15,9 @@
   "bugs": {
     "url": "https://github.com/tgfbikes/Code-School-Curriculum/issues"
   },
-  "homepage": "https://github.com/tgfbikes/Code-School-Curriculum#readme"
+  "homepage": "https://github.com/tgfbikes/Code-School-Curriculum#readme",
+  "dependencies": {
+    "ejs": "^2.4.1",
+    "express": "^4.13.4"
+  }
 }
