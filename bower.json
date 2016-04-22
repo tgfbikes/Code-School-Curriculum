@@ -1,0 +1,18 @@
+{
+  "name": "codeschool",
+  "description": "Dixie State Code School curriculum proposal",
+  "main": "index.js",
+  "authors": [
+    "Stephen King (tgfbikes)"
+  ],
+  "license": "ISC",
+  "homepage": "https://github.com/tgfbikes/Code-School-Curriculum",
+  "moduleType": [],
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
