@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/tgfbikes/Code-School-Curriculum#readme",
   "dependencies": {
+    "browser-sync": "^2.12.3",
     "ejs": "^2.4.1",
     "express": "^4.13.4",
     "gulp": "^3.9.1",
