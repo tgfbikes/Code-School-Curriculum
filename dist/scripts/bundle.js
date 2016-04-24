@@ -29024,13 +29024,69 @@ module.exports = require('./lib/React');
 'use strict';
 
 var React = require('react');
+var TodoList = require('./TodoList');
+var TodoForm = require('./TodoForm');
 
+var Todo = React.createClass({displayName: "Todo",
+  getInitialState: function() {
+    return {
+      todos: [
+        {
+          title: 'Stop shaving',
+          done: false
+        },
+        {
+          title: 'Don\'t cut hair',
+          done: false
+        },
+        {
+          title: 'Wear coding shirts',
+          done: false
+        },
+        {
+          title: 'Use big words to sound smart',
+          done: false
+        },
+      ]
+    }
+  },
+  render: function() {
+    return (
+     React.createElement("div", {className: "container"}, 
+       React.createElement("div", {className: "row"}, 
+         React.createElement(TodoForm, null), 
+         React.createElement(TodoList, {
+           todos: this.state.todos}
+         )
+       )
+     )
+    );
+  }
+});
+
+module.exports = Todo;
+
+},{"./TodoForm":159,"./TodoList":160,"react":157}],159:[function(require,module,exports){
+'use strict';
+
+var React = require('react');
 
 var TodoForm = React.createClass({displayName: "TodoForm",
   render: function() {
     return (
       React.createElement("div", {className: "col-md-6"}, 
-        React.createElement("h2", null, "Add a Task")
+        React.createElement("h2", null, "Add a Task"), 
+        React.createElement("form", null, 
+          React.createElement("div", {className: "form-group"}, 
+            React.createElement("label", {htmlFor: "title"}, "Title"), 
+            React.createElement("input", {type: "text", className: "form-control", id: "title", placeholder: "Todo title"})
+          ), 
+          React.createElement("div", {className: "form-group"}, 
+            React.createElement("label", {htmlFor: "description"}, "Password"), 
+            React.createElement("input", {type: "text", className: "form-control", id: "description", placeholder: "description"})
+          ), 
+          React.createElement("button", {type: "submit", className: "btn btn-default"}, "Submit")
+        )
       )
     );
   }
@@ -29038,7 +29094,7 @@ var TodoForm = React.createClass({displayName: "TodoForm",
 
 module.exports = TodoForm;
 
-},{"react":157}],159:[function(require,module,exports){
+},{"react":157}],160:[function(require,module,exports){
 'use strict';
 
 var React = require('react');
@@ -29055,25 +29111,19 @@ var TodoList = React.createClass({displayName: "TodoList",
 
 module.exports = TodoList;
 
-},{"react":157}],160:[function(require,module,exports){
-
+},{"react":157}],161:[function(require,module,exports){
 $ = jQuery = require('jquery');
 var React = require('react');
-var TodoList = require('./components/TodoList');
-var TodoForm = require('./components/TodoForm');
+var Todo = require('./components/Todo');
+
 
 var App = React.createClass({displayName: "App",
  render: function() {
    return (
-     React.createElement("div", {className: "container"}, 
-       React.createElement("div", {className: "row"}, 
-         React.createElement(TodoForm, null), 
-         React.createElement(TodoList, null)
-       )
-     )
+     React.createElement(Todo, null)
    );
  }
 });
 
 React.render(React.createElement(App, null), document.getElementById('app'));
-},{"./components/TodoForm":158,"./components/TodoList":159,"jquery":2,"react":157}]},{},[160]);
+},{"./components/Todo":158,"jquery":2,"react":157}]},{},[161]);
