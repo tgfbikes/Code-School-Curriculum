@@ -14,7 +14,12 @@ var TodoList = React.createClass({
       listOfTodos = (
         <ul>
           {todos.map(function(todo, index){
-            return <li key={index}>{todo.title}</li>
+            return (
+              <li key={index}>
+                <strong>{todo.title}</strong>
+                <p>{todo.description}</p>
+              </li>
+            );
           })}
         </ul>
       );

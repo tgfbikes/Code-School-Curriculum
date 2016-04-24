@@ -29033,18 +29033,22 @@ var Todo = React.createClass({displayName: "Todo",
       todos: [
         {
           title: 'Stop shaving',
+          description: 'To look hip',
           done: false
         },
         {
           title: 'Don\'t cut hair',
+          description: 'To also look hip',
           done: false
         },
         {
           title: 'Wear coding shirts',
+          description: 'Everyone must know we code',
           done: false
         },
         {
           title: 'Use big words to sound smart',
+          description: 'ie polymorphism and interpolation',
           done: false
         },
       ]
@@ -29082,7 +29086,7 @@ var TodoForm = React.createClass({displayName: "TodoForm",
             React.createElement("input", {type: "text", className: "form-control", id: "title", placeholder: "Todo title"})
           ), 
           React.createElement("div", {className: "form-group"}, 
-            React.createElement("label", {htmlFor: "description"}, "Password"), 
+            React.createElement("label", {htmlFor: "description"}, "Description"), 
             React.createElement("input", {type: "text", className: "form-control", id: "description", placeholder: "description"})
           ), 
           React.createElement("button", {type: "submit", className: "btn btn-default"}, "Submit")
@@ -29111,7 +29115,12 @@ var TodoList = React.createClass({displayName: "TodoList",
       listOfTodos = (
         React.createElement("ul", null, 
           todos.map(function(todo, index){
-            return React.createElement("li", {key: index}, todo.title)
+            return (
+              React.createElement("li", {key: index}, 
+                React.createElement("strong", null, todo.title), 
+                React.createElement("p", null, todo.description)
+              )
+            );
           })
         )
       );
