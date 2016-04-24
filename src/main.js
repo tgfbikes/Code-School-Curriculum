@@ -1,5 +1,15 @@
 $ = jQuery = require('jquery');
+var React = require('react');
+var TodoList = require('./components/TodoList');
 
-var App = console.log('Hello world from Browserify');
+ var App = React.createClass({
+   render: function() {
+     return (
+       <div>
+         <TodoList />
+       </div>
+     );
+   }
+ });
 
-module.exports = App;
+ React.render(<App />, document.getElementById('app'));
