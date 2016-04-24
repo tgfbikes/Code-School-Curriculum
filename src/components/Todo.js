@@ -10,18 +10,22 @@ var Todo = React.createClass({
       todos: [
         {
           title: 'Stop shaving',
+          description: 'To look hip',
           done: false
         },
         {
           title: 'Don\'t cut hair',
+          description: 'To also look hip',
           done: false
         },
         {
           title: 'Wear coding shirts',
+          description: 'Everyone must know we code',
           done: false
         },
         {
           title: 'Use big words to sound smart',
+          description: 'ie polymorphism and interpolation',
           done: false
         },
       ]
