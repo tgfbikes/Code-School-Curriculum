@@ -29101,9 +29101,25 @@ var React = require('react');
 
 var TodoList = React.createClass({displayName: "TodoList",
   render: function() {
+    var todos = this.props.todos;
+    var listOfTodos;
+    if (!todos) {
+      listOfTodos = (
+        React.createElement("p", null, "No current tasks")
+      );
+    } else {
+      listOfTodos = (
+        React.createElement("ul", null, 
+          todos.map(function(todo, index){
+            return React.createElement("li", {key: index}, todo.title)
+          })
+        )
+      );
+    }
     return (
       React.createElement("div", {className: "col-md-6"}, 
-        React.createElement("h2", null, "Things To Do")
+        React.createElement("h2", null, "Things To Do"), 
+        listOfTodos
       )
     );
   }
