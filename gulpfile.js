@@ -1,13 +1,13 @@
 "use strict";
 
-var gulp 			 = require('gulp');
-var connect 	 = require('gulp-connect'); //Runs a local dev server
-var open 			 = require('gulp-open'); //Open a URL in a web browser
+var gulp = require('gulp');
+var connect = require('gulp-connect'); //Runs a local dev server
+var open = require('gulp-open'); //Open a URL in a web browser
 var browserify = require('browserify'); // Bundles JS
-var reactify   = require('reactify');  // Transforms React JSX to JS
-var source     = require('vinyl-source-stream'); // Use conventional text streams with Gulp
-var concat     = require('gulp-concat'); //Concatenates files
-var lint 			 = require('gulp-eslint'); //Lint JS files, including JSX
+var reactify = require('reactify');  // Transforms React JSX to JS
+var source = require('vinyl-source-stream'); // Use conventional text streams with Gulp
+var concat = require('gulp-concat'); //Concatenates files
+var lint = require('gulp-eslint'); //Lint JS files, including JSX
 
 var config = {
 	port: 9005,
@@ -69,7 +69,7 @@ gulp.task('lint', function() {
 
 gulp.task('watch', function() {
 	gulp.watch(config.paths.html, ['html']);
-	gulp.watch(config.paths.js, ['js', 'lint']);
+	gulp.watch(config.paths.js, ['js']);
 });
 
-gulp.task('default', ['html', 'js', 'css', 'lint', 'open', 'watch']);
+gulp.task('default', ['html', 'js', 'css', 'open', 'watch']);
