@@ -13,7 +13,7 @@ var TodoForm = React.createClass({
             <input type="text" className="form-control" id="title" placeholder="Todo title" />
           </div>
           <div className="form-group">
-            <label htmlFor="description">Password</label>
+            <label htmlFor="description">Description</label>
             <input type="text" className="form-control" id="description" placeholder="description" />
           </div>
           <button type="submit" className="btn btn-default">Submit</button>
