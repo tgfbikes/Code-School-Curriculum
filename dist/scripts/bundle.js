@@ -29021,13 +29021,33 @@ module.exports = warning;
 module.exports = require('./lib/React');
 
 },{"./lib/React":30}],158:[function(require,module,exports){
+'use strict';
+
+var React = require('react');
+
+
+var TodoForm = React.createClass({displayName: "TodoForm",
+  render: function() {
+    return (
+      React.createElement("div", {className: "col-md-6"}, 
+        React.createElement("h2", null, "Add a Task")
+      )
+    );
+  }
+});
+
+module.exports = TodoForm;
+
+},{"react":157}],159:[function(require,module,exports){
+'use strict';
+
 var React = require('react');
 
 var TodoList = React.createClass({displayName: "TodoList",
   render: function() {
     return (
-      React.createElement("div", null, 
-        React.createElement("p", null, "TodoList working")
+      React.createElement("div", {className: "col-md-6"}, 
+        React.createElement("h2", null, "Things To Do")
       )
     );
   }
@@ -29035,20 +29055,25 @@ var TodoList = React.createClass({displayName: "TodoList",
 
 module.exports = TodoList;
 
-},{"react":157}],159:[function(require,module,exports){
+},{"react":157}],160:[function(require,module,exports){
+
 $ = jQuery = require('jquery');
 var React = require('react');
 var TodoList = require('./components/TodoList');
+var TodoForm = require('./components/TodoForm');
 
- var App = React.createClass({displayName: "App",
-   render: function() {
-     return (
-       React.createElement("div", null, 
+var App = React.createClass({displayName: "App",
+ render: function() {
+   return (
+     React.createElement("div", {className: "container"}, 
+       React.createElement("div", {className: "row"}, 
+         React.createElement(TodoForm, null), 
          React.createElement(TodoList, null)
        )
-     );
-   }
- });
+     )
+   );
+ }
+});
 
- React.render(React.createElement(App, null), document.getElementById('app'));
-},{"./components/TodoList":158,"jquery":2,"react":157}]},{},[159]);
+React.render(React.createElement(App, null), document.getElementById('app'));
+},{"./components/TodoForm":158,"./components/TodoList":159,"jquery":2,"react":157}]},{},[160]);
