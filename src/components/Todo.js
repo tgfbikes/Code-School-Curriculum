@@ -11,6 +11,7 @@ var Todo = React.createClass({
         title: {
           type: 'text',
           id: 'title',
+          name: 'title',
           value: '',
           className: 'form-control',
           placeholder: 'Title',
@@ -18,6 +19,7 @@ var Todo = React.createClass({
         description: {
           type: 'text',
           id: 'description',
+          name: 'description',
           value: '',
           className: 'form-control',
           placeholder: 'Description',
@@ -47,6 +49,7 @@ var Todo = React.createClass({
       ]
     }
   },
+
   handleInputChange: function(key) {
     return function(evt) {
       var newInputs = Object.assign({}, this.state.inputs);
@@ -56,12 +59,29 @@ var Todo = React.createClass({
       });
     }.bind(this);
   },
+
   addTodo: function(evt) {
     evt.preventDefault();
-    console.log('addTodo clicked!');
+
+    var newTodos = Object.assign([], this.state.todos);
+    var resetInputs = Object.assign({}, this.state.inputs);
+
+    var newTodo = {
+      title: this.state.inputs.title.value,
+      description: this.state.inputs.description.value,
+      done: false
+    }
+    resetInputs.title.value = '';
+    resetInputs.description.value = '';
+
+    newTodos.push(newTodo);
+    this.setState({
+      todos: newTodos,
+      inputs: resetInputs
+    });
   },
+
   render: function() {
-    console.log(this.state.inputs.description.value);
     return (
      <div className="container">
        <div className="row">
