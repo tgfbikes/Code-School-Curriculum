@@ -23,7 +23,7 @@ var TodoForm = React.createClass({
               changeHandler={this.props.changeHandler('description')}
             />
           </div>
-          <button type="submit" className="btn btn-default">Submit</button>
+          <button type="submit" className="btn btn-primary">Add Task</button>
         </form>
       </div>
     );
