@@ -29034,6 +29034,7 @@ var Todo = React.createClass({displayName: "Todo",
         title: {
           type: 'text',
           id: 'title',
+          name: 'title',
           value: '',
           className: 'form-control',
           placeholder: 'Title',
@@ -29041,6 +29042,7 @@ var Todo = React.createClass({displayName: "Todo",
         description: {
           type: 'text',
           id: 'description',
+          name: 'description',
           value: '',
           className: 'form-control',
           placeholder: 'Description',
@@ -29070,6 +29072,7 @@ var Todo = React.createClass({displayName: "Todo",
       ]
     }
   },
+
   handleInputChange: function(key) {
     return function(evt) {
       var newInputs = Object.assign({}, this.state.inputs);
@@ -29079,12 +29082,29 @@ var Todo = React.createClass({displayName: "Todo",
       });
     }.bind(this);
   },
+
   addTodo: function(evt) {
     evt.preventDefault();
-    console.log('addTodo clicked!');
+
+    var newTodos = Object.assign([], this.state.todos);
+    var resetInputs = Object.assign({}, this.state.inputs);
+
+    var newTodo = {
+      title: this.state.inputs.title.value,
+      description: this.state.inputs.description.value,
+      done: false
+    }
+    resetInputs.title.value = '';
+    resetInputs.description.value = '';
+
+    newTodos.push(newTodo);
+    this.setState({
+      todos: newTodos,
+      inputs: resetInputs
+    });
   },
+
   render: function() {
-    console.log(this.state.inputs.description.value);
     return (
      React.createElement("div", {className: "container"}, 
        React.createElement("div", {className: "row"}, 
@@ -29145,9 +29165,11 @@ module.exports = TodoForm;
 var React = require('react');
 
 var TodoList = React.createClass({displayName: "TodoList",
+
   render: function() {
     var todos = this.props.todos;
     var listOfTodos;
+
     if (!todos) {
       listOfTodos = (
         React.createElement("p", null, "No current tasks")
@@ -29166,6 +29188,7 @@ var TodoList = React.createClass({displayName: "TodoList",
         )
       );
     }
+
     return (
       React.createElement("div", {className: "col-md-6"}, 
         React.createElement("h2", null, "Things To Do"), 
@@ -29188,7 +29211,9 @@ var TextInput = React.createClass({displayName: "TextInput",
       React.createElement("input", {
         type: this.props.inputConfig.type, 
         id: this.props.inputConfig.id, 
-        value: this.props.inputConfig.inputValue, 
+        name: this.props.inputConfig.name, 
+        ref: this.props.inputConfig.name, 
+        value: this.props.inputConfig.value, 
         className: this.props.inputConfig.className, 
         placeholder: this.props.inputConfig.placeholder, 
         onChange: this.props.changeHandler}
