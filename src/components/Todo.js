@@ -7,6 +7,22 @@ var TodoForm = require('./TodoForm');
 var Todo = React.createClass({
   getInitialState: function() {
     return {
+      inputs: {
+        title: {
+          type: 'text',
+          id: 'title',
+          value: '',
+          className: 'form-control',
+          placeholder: 'Title',
+        },
+        description: {
+          type: 'text',
+          id: 'description',
+          value: '',
+          className: 'form-control',
+          placeholder: 'Description',
+        }
+      },
       todos: [
         {
           title: 'Stop shaving',
@@ -31,16 +47,28 @@ var Todo = React.createClass({
       ]
     }
   },
+  handleInputChange: function(key) {
+    return function(evt) {
+      var newInputs = Object.assign({}, this.state.inputs);
+      newInputs[key].value = evt.target.value;
+      this.setState({
+        inputs: newInputs
+      });
+    }.bind(this);
+  },
   addTodo: function(evt) {
     evt.preventDefault();
     console.log('addTodo clicked!');
   },
   render: function() {
+    console.log(this.state.inputs.description.value);
     return (
      <div className="container">
        <div className="row">
          <TodoForm
            addTodo={this.addTodo}
+           inputConfig={this.state.inputs}
+           changeHandler={this.handleInputChange}
          />
          <TodoList
            todos={this.state.todos}
