@@ -31,11 +31,17 @@ var Todo = React.createClass({
       ]
     }
   },
+  addTodo: function(evt) {
+    evt.preventDefault();
+    console.log('addTodo clicked!');
+  },
   render: function() {
     return (
      <div className="container">
        <div className="row">
-         <TodoForm />
+         <TodoForm
+           addTodo={this.addTodo}
+         />
          <TodoList
            todos={this.state.todos}
          />
