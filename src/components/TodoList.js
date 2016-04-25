@@ -3,9 +3,11 @@
 var React = require('react');
 
 var TodoList = React.createClass({
+
   render: function() {
     var todos = this.props.todos;
     var listOfTodos;
+
     if (!todos) {
       listOfTodos = (
         <p>No current tasks</p>
@@ -24,6 +26,7 @@ var TodoList = React.createClass({
         </ul>
       );
     }
+
     return (
       <div className="col-md-6">
         <h2>Things To Do</h2>
