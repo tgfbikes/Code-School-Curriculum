@@ -1,6 +1,7 @@
 'use strict';
 
 var React = require('react');
+var TextInput = require('./form/TextInput');
 
 var TodoForm = React.createClass({
   render: function() {
@@ -10,11 +11,17 @@ var TodoForm = React.createClass({
         <form onSubmit={this.props.addTodo}>
           <div className="form-group">
             <label htmlFor="title">Title</label>
-            <input type="text" className="form-control" id="title" placeholder="Title" />
+            <TextInput
+              inputConfig={this.props.inputConfig.title}
+              changeHandler={this.props.changeHandler('title')}
+            />
           </div>
           <div className="form-group">
             <label htmlFor="description">Description</label>
-            <input type="text" className="form-control" id="description" placeholder="Description" />
+            <TextInput
+              inputConfig={this.props.inputConfig.description}
+              changeHandler={this.props.changeHandler('description')}
+            />
           </div>
           <button type="submit" className="btn btn-default">Submit</button>
         </form>
