@@ -29030,6 +29030,22 @@ var TodoForm = require('./TodoForm');
 var Todo = React.createClass({displayName: "Todo",
   getInitialState: function() {
     return {
+      inputs: {
+        title: {
+          type: 'text',
+          id: 'title',
+          value: '',
+          className: 'form-control',
+          placeholder: 'Title',
+        },
+        description: {
+          type: 'text',
+          id: 'description',
+          value: '',
+          className: 'form-control',
+          placeholder: 'Description',
+        }
+      },
       todos: [
         {
           title: 'Stop shaving',
@@ -29054,11 +29070,29 @@ var Todo = React.createClass({displayName: "Todo",
       ]
     }
   },
+  handleInputChange: function(key) {
+    return function(evt) {
+      var newInputs = Object.assign({}, this.state.inputs);
+      newInputs[key].value = evt.target.value;
+      this.setState({
+        inputs: newInputs
+      });
+    }.bind(this);
+  },
+  addTodo: function(evt) {
+    evt.preventDefault();
+    console.log('addTodo clicked!');
+  },
   render: function() {
+    console.log(this.state.inputs.description.value);
     return (
      React.createElement("div", {className: "container"}, 
        React.createElement("div", {className: "row"}, 
-         React.createElement(TodoForm, null), 
+         React.createElement(TodoForm, {
+           addTodo: this.addTodo, 
+           inputConfig: this.state.inputs, 
+           changeHandler: this.handleInputChange}
+         ), 
          React.createElement(TodoList, {
            todos: this.state.todos}
          )
@@ -29074,20 +29108,27 @@ module.exports = Todo;
 'use strict';
 
 var React = require('react');
+var TextInput = require('./form/TextInput');
 
 var TodoForm = React.createClass({displayName: "TodoForm",
   render: function() {
     return (
       React.createElement("div", {className: "col-md-6"}, 
         React.createElement("h2", null, "Add a Task"), 
-        React.createElement("form", null, 
+        React.createElement("form", {onSubmit: this.props.addTodo}, 
           React.createElement("div", {className: "form-group"}, 
             React.createElement("label", {htmlFor: "title"}, "Title"), 
-            React.createElement("input", {type: "text", className: "form-control", id: "title", placeholder: "Todo title"})
+            React.createElement(TextInput, {
+              inputConfig: this.props.inputConfig.title, 
+              changeHandler: this.props.changeHandler('title')}
+            )
           ), 
           React.createElement("div", {className: "form-group"}, 
             React.createElement("label", {htmlFor: "description"}, "Description"), 
-            React.createElement("input", {type: "text", className: "form-control", id: "description", placeholder: "description"})
+            React.createElement(TextInput, {
+              inputConfig: this.props.inputConfig.description, 
+              changeHandler: this.props.changeHandler('description')}
+            )
           ), 
           React.createElement("button", {type: "submit", className: "btn btn-default"}, "Submit")
         )
@@ -29098,7 +29139,7 @@ var TodoForm = React.createClass({displayName: "TodoForm",
 
 module.exports = TodoForm;
 
-},{"react":157}],160:[function(require,module,exports){
+},{"./form/TextInput":161,"react":157}],160:[function(require,module,exports){
 'use strict';
 
 var React = require('react');
@@ -29137,18 +29178,40 @@ var TodoList = React.createClass({displayName: "TodoList",
 module.exports = TodoList;
 
 },{"react":157}],161:[function(require,module,exports){
+'use strict';
+
+var React = require('react');
+
+var TextInput = React.createClass({displayName: "TextInput",
+  render: function() {
+    return (
+      React.createElement("input", {
+        type: this.props.inputConfig.type, 
+        id: this.props.inputConfig.id, 
+        value: this.props.inputConfig.inputValue, 
+        className: this.props.inputConfig.className, 
+        placeholder: this.props.inputConfig.placeholder, 
+        onChange: this.props.changeHandler}
+      )
+    );
+  }
+});
+
+module.exports = TextInput;
+
+},{"react":157}],162:[function(require,module,exports){
 $ = jQuery = require('jquery');
 var React = require('react');
 var Todo = require('./components/Todo');
 
 
 var App = React.createClass({displayName: "App",
- render: function() {
+  render: function() {
    return (
      React.createElement(Todo, null)
    );
- }
+  }
 });
 
 React.render(React.createElement(App, null), document.getElementById('app'));
-},{"./components/Todo":158,"jquery":2,"react":157}]},{},[161]);
+},{"./components/Todo":158,"jquery":2,"react":157}]},{},[162]);
