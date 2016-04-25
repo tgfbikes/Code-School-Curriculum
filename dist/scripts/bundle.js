@@ -29150,7 +29150,7 @@ var TodoForm = React.createClass({displayName: "TodoForm",
               changeHandler: this.props.changeHandler('description')}
             )
           ), 
-          React.createElement("button", {type: "submit", className: "btn btn-default"}, "Submit")
+          React.createElement("button", {type: "submit", className: "btn btn-primary"}, "Add Task")
         )
       )
     );
@@ -29176,12 +29176,14 @@ var TodoList = React.createClass({displayName: "TodoList",
       );
     } else {
       listOfTodos = (
-        React.createElement("ul", null, 
+        React.createElement("ul", {className: "list-unstyled"}, 
           todos.map(function(todo, index){
             return (
               React.createElement("li", {key: index}, 
-                React.createElement("strong", null, todo.title), 
-                React.createElement("p", null, todo.description)
+                React.createElement("span", null, React.createElement("strong", null, todo.title), " - ", todo.description), 
+                React.createElement("br", null), 
+                React.createElement("button", {className: "btn btn-warning btn-xs"}, "Edit"), 
+                React.createElement("button", {className: "btn btn-danger btn-xs"}, "Delete")
               )
             );
           })

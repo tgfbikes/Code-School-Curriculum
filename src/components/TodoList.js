@@ -14,12 +14,14 @@ var TodoList = React.createClass({
       );
     } else {
       listOfTodos = (
-        <ul>
+        <ul className="list-unstyled">
           {todos.map(function(todo, index){
             return (
               <li key={index}>
-                <strong>{todo.title}</strong>
-                <p>{todo.description}</p>
+                <span><strong>{todo.title}</strong> - {todo.description}</span>
+                <br />
+                <button className="btn btn-warning btn-xs">Edit</button>
+                <button className="btn btn-danger btn-xs">Delete</button>
               </li>
             );
           })}
