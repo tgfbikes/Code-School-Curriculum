@@ -7,14 +7,14 @@ var TodoForm = React.createClass({
     return (
       <div className="col-md-6">
         <h2>Add a Task</h2>
-        <form>
+        <form onSubmit={this.props.addTodo}>
           <div className="form-group">
             <label htmlFor="title">Title</label>
-            <input type="text" className="form-control" id="title" placeholder="Todo title" />
+            <input type="text" className="form-control" id="title" placeholder="Title" />
           </div>
           <div className="form-group">
             <label htmlFor="description">Description</label>
-            <input type="text" className="form-control" id="description" placeholder="description" />
+            <input type="text" className="form-control" id="description" placeholder="Description" />
           </div>
           <button type="submit" className="btn btn-default">Submit</button>
         </form>
