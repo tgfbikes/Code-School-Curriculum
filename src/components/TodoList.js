@@ -17,7 +17,7 @@ var TodoList = React.createClass({
         <ul className="list-unstyled">
           {todos.map(function(todo, index){
             return (
-              <li key={index}>
+              <li className="todo__list-item" key={index}>
                 <span><strong>{todo.title}</strong> - {todo.description}</span>
                 <br />
                 <button className="btn btn-warning btn-xs">Edit</button>
