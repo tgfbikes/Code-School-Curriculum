@@ -81,6 +81,22 @@ var Todo = React.createClass({
     });
   },
 
+  deleteTodo: function(index) {
+
+    var updatedTodos = Object.assign({}, this.state.todos);
+    console.log('delete todo');
+    console.log(index);
+
+  },
+
+  editTodo: function() {
+
+    var updatedTodos = Object.assign({}, this.state.todos);
+    console.log('edit todo');
+
+  },
+
+
   render: function() {
     return (
      <div className="container">
@@ -92,6 +108,8 @@ var Todo = React.createClass({
          />
          <TodoList
            todos={this.state.todos}
+           editTodo={this.editTodo}
+           deleteTodo={this.deleteTodo}
          />
        </div>
      </div>
