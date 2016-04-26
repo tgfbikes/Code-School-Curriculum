@@ -29104,6 +29104,22 @@ var Todo = React.createClass({displayName: "Todo",
     });
   },
 
+  deleteTodo: function(index) {
+
+    var updatedTodos = Object.assign({}, this.state.todos);
+    console.log('delete todo');
+    console.log(index);
+
+  },
+
+  editTodo: function() {
+
+    var updatedTodos = Object.assign({}, this.state.todos);
+    console.log('edit todo');
+
+  },
+
+
   render: function() {
     return (
      React.createElement("div", {className: "container"}, 
@@ -29114,7 +29130,9 @@ var Todo = React.createClass({displayName: "Todo",
            changeHandler: this.handleInputChange}
          ), 
          React.createElement(TodoList, {
-           todos: this.state.todos}
+           todos: this.state.todos, 
+           editTodo: this.editTodo, 
+           deleteTodo: this.deleteTodo}
          )
        )
      )
@@ -29159,10 +29177,11 @@ var TodoForm = React.createClass({displayName: "TodoForm",
 
 module.exports = TodoForm;
 
-},{"./form/TextInput":161,"react":157}],160:[function(require,module,exports){
+},{"./form/TextInput":162,"react":157}],160:[function(require,module,exports){
 'use strict';
 
 var React = require('react');
+var TodoListItem = require('./TodoListItem');
 
 var TodoList = React.createClass({displayName: "TodoList",
 
@@ -29179,14 +29198,9 @@ var TodoList = React.createClass({displayName: "TodoList",
         React.createElement("ul", {className: "list-unstyled"}, 
           todos.map(function(todo, index){
             return (
-              React.createElement("li", {key: index}, 
-                React.createElement("span", null, React.createElement("strong", null, todo.title), " - ", todo.description), 
-                React.createElement("br", null), 
-                React.createElement("button", {className: "btn btn-warning btn-xs"}, "Edit"), 
-                React.createElement("button", {className: "btn btn-danger btn-xs"}, "Delete")
-              )
+              React.createElement(TodoListItem, {key: index, todoData: todo})
             );
-          })
+          }.bind(this))
         )
       );
     }
@@ -29202,7 +29216,30 @@ var TodoList = React.createClass({displayName: "TodoList",
 
 module.exports = TodoList;
 
-},{"react":157}],161:[function(require,module,exports){
+},{"./TodoListItem":161,"react":157}],161:[function(require,module,exports){
+'use strict';
+
+var React = require('react');
+
+var TodoListItem = React.createClass({displayName: "TodoListItem",
+  render: function() {
+    return (
+      React.createElement("li", {className: "todo__list-item"}, 
+        React.createElement("span", null, React.createElement("strong", null, this.props.todoData.title), 
+        React.createElement("br", null), 
+        "- ", this.props.todoData.description), 
+        React.createElement("div", {className: "pull-right"}, 
+          React.createElement("a", {className: "btn btn-warning btn-sm"}, "Edit"), 
+          React.createElement("a", {className: "btn btn-danger btn-sm"}, "Delete")
+        )
+      )
+    );
+  }
+});
+
+module.exports = TodoListItem;
+
+},{"react":157}],162:[function(require,module,exports){
 'use strict';
 
 var React = require('react');
@@ -29226,7 +29263,7 @@ var TextInput = React.createClass({displayName: "TextInput",
 
 module.exports = TextInput;
 
-},{"react":157}],162:[function(require,module,exports){
+},{"react":157}],163:[function(require,module,exports){
 $ = jQuery = require('jquery');
 var React = require('react');
 var Todo = require('./components/Todo');
@@ -29241,4 +29278,4 @@ var App = React.createClass({displayName: "App",
 });
 
 React.render(React.createElement(App, null), document.getElementById('app'));
-},{"./components/Todo":158,"jquery":2,"react":157}]},{},[162]);
+},{"./components/Todo":158,"jquery":2,"react":157}]},{},[163]);
