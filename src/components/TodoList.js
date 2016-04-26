@@ -1,6 +1,7 @@
 'use strict';
 
 var React = require('react');
+var TodoListItem = require('./TodoListItem');
 
 var TodoList = React.createClass({
 
@@ -17,14 +18,9 @@ var TodoList = React.createClass({
         <ul className="list-unstyled">
           {todos.map(function(todo, index){
             return (
-              <li className="todo__list-item" key={index}>
-                <span><strong>{todo.title}</strong> - {todo.description}</span>
-                <br />
-                <button className="btn btn-warning btn-xs">Edit</button>
-                <button className="btn btn-danger btn-xs">Delete</button>
-              </li>
+              <TodoListItem key={index} todoData={todo} />
             );
-          })}
+          }.bind(this))}
         </ul>
       );
     }
