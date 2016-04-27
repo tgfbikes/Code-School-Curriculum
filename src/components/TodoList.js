@@ -16,7 +16,7 @@ var TodoList = React.createClass({
     } else {
       listOfTodos = (
         <ul className="list-unstyled">
-          {todos.map(function(todo, index){
+          {todos.map((todo, index) => {
             return (
               <TodoListItem
                 key={index}
@@ -26,7 +26,7 @@ var TodoList = React.createClass({
                 deleteTodo={this.props.deleteTodo}
               />
             );
-          }.bind(this))}
+          })}
         </ul>
       );
     }

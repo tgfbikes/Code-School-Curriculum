@@ -1,6 +1,6 @@
 'use strict';
 
-var React = require('react');
+let React = require('react');
 var TodoList = require('./TodoList');
 var TodoForm = require('./TodoForm');
 
