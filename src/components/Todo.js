@@ -81,6 +81,7 @@ var Todo = React.createClass({
 
   deleteTodo: function(index) {
     var updatedTodos = Object.assign([], this.state.todos);
+
     console.log('delete todo');
     updatedTodos.splice(index, 1);
     this.setState({
@@ -89,9 +90,13 @@ var Todo = React.createClass({
   },
 
   completedTodo: function(index) {
+    var updatedTodos = Object.assign([], this.state.todos);
 
-    var updatedTodos = Object.assign({}, this.state.todos);
     console.log('completed todo');
+    updatedTodos[index].done = true;
+    this.setState({
+      todos: updatedTodos
+    });
 
   },
 
