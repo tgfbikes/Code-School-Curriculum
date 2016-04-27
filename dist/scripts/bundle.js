@@ -29105,22 +29105,25 @@ var Todo = React.createClass({displayName: "Todo",
   },
 
   deleteTodo: function(index) {
-
-    var updatedTodos = Object.assign({}, this.state.todos);
+    var updatedTodos = Object.assign([], this.state.todos);
     console.log('delete todo');
-    console.log(index);
-
+    updatedTodos.splice(index, 1);
+    this.setState({
+      todos: updatedTodos
+    });
   },
 
-  editTodo: function() {
+  editTodo: function(index) {
 
     var updatedTodos = Object.assign({}, this.state.todos);
     console.log('edit todo');
+    console.log(key);
 
   },
 
 
   render: function() {
+    console.log(this.state.todos);
     return (
      React.createElement("div", {className: "container"}, 
        React.createElement("div", {className: "row"}, 
@@ -29189,7 +29192,7 @@ var TodoList = React.createClass({displayName: "TodoList",
     var todos = this.props.todos;
     var listOfTodos;
 
-    if (!todos) {
+    if (todos.length === 0) {
       listOfTodos = (
         React.createElement("p", null, "No current tasks")
       );
@@ -29198,7 +29201,13 @@ var TodoList = React.createClass({displayName: "TodoList",
         React.createElement("ul", {className: "list-unstyled"}, 
           todos.map(function(todo, index){
             return (
-              React.createElement(TodoListItem, {key: index, todoData: todo})
+              React.createElement(TodoListItem, {
+                key: index, 
+                index: index, 
+                todoData: todo, 
+                editTodo: this.props.editTodo, 
+                deleteTodo: this.props.deleteTodo}
+              )
             );
           }.bind(this))
         )
@@ -29223,14 +29232,15 @@ var React = require('react');
 
 var TodoListItem = React.createClass({displayName: "TodoListItem",
   render: function() {
+    var index = this.props.index;
     return (
       React.createElement("li", {className: "todo__list-item"}, 
         React.createElement("span", null, React.createElement("strong", null, this.props.todoData.title), 
         React.createElement("br", null), 
         "- ", this.props.todoData.description), 
         React.createElement("div", {className: "pull-right"}, 
-          React.createElement("a", {className: "btn btn-warning btn-sm"}, "Edit"), 
-          React.createElement("a", {className: "btn btn-danger btn-sm"}, "Delete")
+          React.createElement("div", {className: "btn btn-warning btn-sm", onClick: this.props.editTodo.bind(null, index)}, "Edit"), 
+          React.createElement("div", {className: "btn btn-danger btn-sm", onClick: this.props.deleteTodo.bind(null, index)}, "Delete")
         )
       )
     );

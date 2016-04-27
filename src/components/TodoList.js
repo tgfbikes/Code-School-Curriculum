@@ -9,7 +9,7 @@ var TodoList = React.createClass({
     var todos = this.props.todos;
     var listOfTodos;
 
-    if (!todos) {
+    if (todos.length === 0) {
       listOfTodos = (
         <p>No current tasks</p>
       );
