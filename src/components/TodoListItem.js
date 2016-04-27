@@ -5,8 +5,10 @@ var React = require('react');
 var TodoListItem = React.createClass({
   render: function() {
     var index = this.props.index;
+    var todoStatus = this.props.todoData.done ? ' bg-success' : ' bg-info';
+    console.log(todoStatus);
     return (
-      <li className="todo__list-item">
+      <li className={"todo__list-item clearfix" + todoStatus}>
         <span><strong>{this.props.todoData.title}</strong>
         <br />
         - {this.props.todoData.description}</span>

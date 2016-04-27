@@ -29104,6 +29104,7 @@ var Todo = React.createClass({displayName: "Todo",
 
   deleteTodo: function(index) {
     var updatedTodos = Object.assign([], this.state.todos);
+
     console.log('delete todo');
     updatedTodos.splice(index, 1);
     this.setState({
@@ -29112,9 +29113,13 @@ var Todo = React.createClass({displayName: "Todo",
   },
 
   completedTodo: function(index) {
+    var updatedTodos = Object.assign([], this.state.todos);
 
-    var updatedTodos = Object.assign({}, this.state.todos);
     console.log('completed todo');
+    updatedTodos[index].done = true;
+    this.setState({
+      todos: updatedTodos
+    });
 
   },
 
@@ -29230,8 +29235,10 @@ var React = require('react');
 var TodoListItem = React.createClass({displayName: "TodoListItem",
   render: function() {
     var index = this.props.index;
+    var todoStatus = this.props.todoData.done ? ' bg-success' : ' bg-info';
+    console.log(todoStatus);
     return (
-      React.createElement("li", {className: "todo__list-item"}, 
+      React.createElement("li", {className: "todo__list-item clearfix" + todoStatus}, 
         React.createElement("span", null, React.createElement("strong", null, this.props.todoData.title), 
         React.createElement("br", null), 
         "- ", this.props.todoData.description), 
