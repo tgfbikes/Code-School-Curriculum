@@ -2,7 +2,7 @@
 
 var gulp = require('gulp');
 var connect = require('gulp-connect'); //Runs a local dev server
-var open = require('gulp-open'); //Open a URL in a web browser
+var gOpen = require('gulp-open'); //Open a URL in a web browser
 var browserify = require('browserify'); // Bundles JS
 var reactify = require('reactify');  // Transforms React JSX to JS
 // var babelify = require('babelify'); // Transforms React JSX to JS
@@ -36,9 +36,9 @@ gulp.task('connect', function() {
 	});
 });
 
-gulp.task('open', ['connect'], function() {
+gulp.task('gOpen', ['connect'], function() {
 	gulp.src('dist/index.html')
-		.pipe(open({ uri: config.devBaseUrl + ':' + config.port + '/'}));
+		.pipe(gOpen({ uri: config.devBaseUrl + ':' + config.port + '/'}));
 });
 
 gulp.task('html', function() {
@@ -75,4 +75,4 @@ gulp.task('watch', function() {
 	gulp.watch(config.paths.js, ['js']);
 });
 
-gulp.task('default', ['html', 'js', 'css', 'open', 'watch']);
+gulp.task('default', ['html', 'js', 'css', 'gOpen', 'watch']);
