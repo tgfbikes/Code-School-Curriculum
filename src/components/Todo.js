@@ -82,17 +82,19 @@ var Todo = React.createClass({
   },
 
   deleteTodo: function(index) {
-
-    var updatedTodos = Object.assign({}, this.state.todos);
+    var updatedTodos = Object.assign([], this.state.todos);
     console.log('delete todo');
-    console.log(index);
-
+    updatedTodos.splice(index, 1);
+    this.setState({
+      todos: updatedTodos
+    });
   },
 
-  editTodo: function() {
+  editTodo: function(index) {
 
     var updatedTodos = Object.assign({}, this.state.todos);
     console.log('edit todo');
+    console.log(key);
 
   },
 
