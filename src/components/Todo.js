@@ -50,14 +50,12 @@ var Todo = React.createClass({
     }
   },
 
-  handleInputChange: function(key) {
-    return function(evt) {
-      var newInputs = Object.assign({}, this.state.inputs);
-      newInputs[key].value = evt.target.value;
-      this.setState({
-        inputs: newInputs
-      });
-    }.bind(this);
+  handleInputChange: function(evt) {
+    var newInputs = Object.assign({}, this.state.inputs);
+    newInputs[evt.target.name].value = evt.target.value;
+    this.setState({
+      inputs: newInputs
+    });
   },
 
   addTodo: function(evt) {
