@@ -29073,14 +29073,12 @@ var Todo = React.createClass({displayName: "Todo",
     }
   },
 
-  handleInputChange: function(key) {
-    return function(evt) {
-      var newInputs = Object.assign({}, this.state.inputs);
-      newInputs[key].value = evt.target.value;
-      this.setState({
-        inputs: newInputs
-      });
-    }.bind(this);
+  handleInputChange: function(evt) {
+    var newInputs = Object.assign({}, this.state.inputs);
+    newInputs[evt.target.name].value = evt.target.value;
+    this.setState({
+      inputs: newInputs
+    });
   },
 
   addTodo: function(evt) {
@@ -29161,14 +29159,14 @@ var TodoForm = React.createClass({displayName: "TodoForm",
             React.createElement("label", {htmlFor: "title"}, "Title"), 
             React.createElement(TextInput, {
               inputConfig: this.props.inputConfig.title, 
-              changeHandler: this.props.changeHandler('title')}
+              changeHandler: this.props.changeHandler}
             )
           ), 
           React.createElement("div", {className: "form-group"}, 
             React.createElement("label", {htmlFor: "description"}, "Description"), 
             React.createElement(TextInput, {
               inputConfig: this.props.inputConfig.description, 
-              changeHandler: this.props.changeHandler('description')}
+              changeHandler: this.props.changeHandler}
             )
           ), 
           React.createElement("button", {type: "submit", className: "btn btn-primary"}, "Add Task")

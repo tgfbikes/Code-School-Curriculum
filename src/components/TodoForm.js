@@ -13,14 +13,14 @@ var TodoForm = React.createClass({
             <label htmlFor="title">Title</label>
             <TextInput
               inputConfig={this.props.inputConfig.title}
-              changeHandler={this.props.changeHandler('title')}
+              changeHandler={this.props.changeHandler}
             />
           </div>
           <div className="form-group">
             <label htmlFor="description">Description</label>
             <TextInput
               inputConfig={this.props.inputConfig.description}
-              changeHandler={this.props.changeHandler('description')}
+              changeHandler={this.props.changeHandler}
             />
           </div>
           <button type="submit" className="btn btn-primary">Add Task</button>
