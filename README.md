@@ -1,6 +1,6 @@
 # Code-School-Curriculum
 
-* Work in Process *
+*Work in Process*
 
 The browser only version is up and running
 
