@@ -29111,11 +29111,10 @@ var Todo = React.createClass({displayName: "Todo",
     });
   },
 
-  editTodo: function(index) {
+  completedTodo: function(index) {
 
     var updatedTodos = Object.assign({}, this.state.todos);
-    console.log('edit todo');
-    console.log(key);
+    console.log('completed todo');
 
   },
 
@@ -29132,7 +29131,7 @@ var Todo = React.createClass({displayName: "Todo",
          ), 
          React.createElement(TodoList, {
            todos: this.state.todos, 
-           editTodo: this.editTodo, 
+           completedTodo: this.completedTodo, 
            deleteTodo: this.deleteTodo}
          )
        )
@@ -29203,7 +29202,7 @@ var TodoList = React.createClass({displayName: "TodoList",
                 key: index, 
                 index: index, 
                 todoData: todo, 
-                editTodo: this.props.editTodo, 
+                completedTodo: this.props.completedTodo, 
                 deleteTodo: this.props.deleteTodo}
               )
             );
@@ -29237,7 +29236,7 @@ var TodoListItem = React.createClass({displayName: "TodoListItem",
         React.createElement("br", null), 
         "- ", this.props.todoData.description), 
         React.createElement("div", {className: "pull-right"}, 
-          React.createElement("div", {className: "btn btn-warning btn-sm", onClick: this.props.editTodo.bind(null, index)}, "Edit"), 
+          React.createElement("div", {className: "btn btn-success btn-sm", onClick: this.props.completedTodo.bind(null, index)}, "Completed"), 
           React.createElement("div", {className: "btn btn-danger btn-sm", onClick: this.props.deleteTodo.bind(null, index)}, "Delete")
         )
       )

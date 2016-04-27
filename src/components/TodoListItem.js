@@ -11,7 +11,7 @@ var TodoListItem = React.createClass({
         <br />
         - {this.props.todoData.description}</span>
         <div className="pull-right">
-          <div className="btn btn-warning btn-sm" onClick={this.props.editTodo.bind(null, index)}>Edit</div>
+          <div className="btn btn-success btn-sm" onClick={this.props.completedTodo.bind(null, index)}>Completed</div>
           <div className="btn btn-danger btn-sm" onClick={this.props.deleteTodo.bind(null, index)}>Delete</div>
         </div>
       </li>
