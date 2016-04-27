@@ -22,7 +22,7 @@ var TodoList = React.createClass({
                 key={index}
                 index={index}
                 todoData={todo}
-                editTodo={this.props.editTodo}
+                completedTodo={this.props.completedTodo}
                 deleteTodo={this.props.deleteTodo}
               />
             );

@@ -88,11 +88,10 @@ var Todo = React.createClass({
     });
   },
 
-  editTodo: function(index) {
+  completedTodo: function(index) {
 
     var updatedTodos = Object.assign({}, this.state.todos);
-    console.log('edit todo');
-    console.log(key);
+    console.log('completed todo');
 
   },
 
@@ -109,7 +108,7 @@ var Todo = React.createClass({
          />
          <TodoList
            todos={this.state.todos}
-           editTodo={this.editTodo}
+           completedTodo={this.completedTodo}
            deleteTodo={this.deleteTodo}
          />
        </div>
