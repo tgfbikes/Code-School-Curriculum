@@ -18,7 +18,13 @@ var TodoList = React.createClass({
         <ul className="list-unstyled">
           {todos.map(function(todo, index){
             return (
-              <TodoListItem key={index} todoData={todo} />
+              <TodoListItem
+                key={index}
+                index={index}
+                todoData={todo}
+                editTodo={this.props.editTodo}
+                deleteTodo={this.props.deleteTodo}
+              />
             );
           }.bind(this))}
         </ul>
