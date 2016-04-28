@@ -4,12 +4,14 @@
 
 The browser only version is up and running (react/)
 
-1. clone repo
-2. cd into either react/ or react-server/
-3. npm install
-4. open terminal
-5. install gulp if it's not already intalled **~ npm install -g gulp**
-6. run gulp **~ gulp**
-7. enjoy
+## Installation
+```
+git clone git@github.com:tgfbikes/Code-School-Curriculum.git
+cd Code-School-Curriculum
+npm install
+gulp
+```
 
-Express server and NoSQL DB are coming soon
+## Todo
+- [ ] Express Server
+- [ ] NoSQL DB
