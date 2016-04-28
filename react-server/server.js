@@ -1,10 +1,10 @@
 var express = require('express');
-
 var app = new express();
 
-app.get('/', function(req, res) {
-  res.send('this is working');
-});
+// Routes for application
+var appRouter = require('./routes/index');
+
+app.use('/', appRouter);
 
 app.listen(3000, function() {
   console.log('Server running..')
