@@ -1,10 +1,6 @@
 'use strict';
 
-var express = require('express');
-var router = express.Router();
-
-router.get('/', function(req, res) {
-  res.render('index');
-});
-
-module.exports = router;
+module.exports = function (app) {
+  require('./api/index')(app);
+  require('./main/index')(app);
+};
