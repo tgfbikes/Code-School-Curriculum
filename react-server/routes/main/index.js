@@ -1,9 +1,9 @@
 'use strict';
 
-var TodoCtrl = require('../../controllers/TodoCtrl');
+var MainCtrl = require('../../controllers/MainCtrl');
 
 module.exports = function(app) {
   
-  app.get('/', TodoCtrl.index);
+  app.get('/', MainCtrl.index);
 
 };
