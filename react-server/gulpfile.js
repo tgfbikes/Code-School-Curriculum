@@ -1,15 +1,19 @@
 'use strict';
 
-var gulp = require('gulp');
+var gulp         = require('gulp');
 var gutil        = require('gulp-util');
 var sass         = require('gulp-sass');
 var autoprefixer = require('gulp-autoprefixer');
 var concat       = require('gulp-concat');
+var browserify   = require('browserify');
+var reactify     = require('reactify');
+var source       = require('vinyl-source-stream'); // Use conventional text streams with Gulp
 
 var config = {
   paths: {
     jade: './client/views/**/*.jade',
     js: './client/js/**/*.js',
+    mainJs: './client/js/main.js',
     scss: './client/assets/scss/**/*.scss',
     public: './public'
   }
@@ -25,13 +29,12 @@ gulp.task('scss', function() {
 });
 
 gulp.task('js', function() {
-  browserify(config.paths.js)
+  browserify(config.paths.mainJs)
     .transform(reactify)
     .bundle()
     .on('error', console.error.bind(console))
     .pipe(source('bundle.js'))
-    .pipe(gulp.dest(config.paths.public + '/scripts'))
-    .pipe(connect.reload());
+    .pipe(gulp.dest(config.paths.public + '/scripts'));
 });
 
 gulp.task('default', ['scss', 'js']);
