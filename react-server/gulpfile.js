@@ -14,7 +14,11 @@ var config = {
     jade: './client/views/**/*.jade',
     js: './client/js/**/*.js',
     mainJs: './client/js/main.js',
-    scss: './client/assets/scss/**/*.scss',
+    scss: [
+      'node_modules/bootstrap/dist/css/bootstrap.min.css',
+      'node_modules/bootstrap/dist/css/bootstrap-theme.min.css',
+      './client/assets/scss/**/*.scss'
+    ],
     public: './public'
   }
 };
