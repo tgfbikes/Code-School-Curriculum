@@ -12,7 +12,7 @@ app.set('view engine', 'jade');
 app.use(express.static(__dirname + '/public'));
 
 // Mongoose connection to MongoDB
-mongoose.connect('mongodb://localhost/todos');
+mongoose.connect('mongodb://sking:P@$$word@ds043714.mlab.com:43714/todos');
 
 // Routes for application
 require('./routes/index')(app);
