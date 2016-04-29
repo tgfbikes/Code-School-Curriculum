@@ -29,6 +29,7 @@ gulp.task('scss', function() {
     .pipe(autoprefixer({
       browsers: ['last 2 versions']
     }))
+    .pipe(concat('bundle.css'))
     .pipe(gulp.dest('./public/css'));
 });
 
