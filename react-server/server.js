@@ -8,7 +8,7 @@ app.set('views', path.join(__dirname, '/client/views'));
 app.set('view engine', 'jade');
 
 // Set up static routes
-app.use(express.static(__dirname + '/client/views'));
+app.use(express.static(__dirname + '/public'));
 
 // Routes for application
 var appRouter = require('./routes/index');
