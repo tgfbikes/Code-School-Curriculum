@@ -29,51 +29,51 @@ var Todo = React.createClass({displayName: "Todo",
         }
       },
       todos: [
-        {
-          title: 'Stop shaving',
-          description: 'To look hip',
-          done: false
-        },
-        {
-          title: 'Don\'t cut hair',
-          description: 'To also look hip',
-          done: false
-        },
-        {
-          title: 'Wear coding shirts',
-          description: 'Everyone must know we code',
-          done: false
-        },
-        {
-          title: 'Use big words to sound smart',
-          description: 'ie polymorphism and interpolation',
-          done: false
-        }
+        // {
+        //   title: 'Stop shaving',
+        //   description: 'To look hip',
+        //   done: false
+        // },
+        // {
+        //   title: 'Don\'t cut hair',
+        //   description: 'To also look hip',
+        //   done: false
+        // },
+        // {
+        //   title: 'Wear coding shirts',
+        //   description: 'Everyone must know we code',
+        //   done: false
+        // },
+        // {
+        //   title: 'Use big words to sound smart',
+        //   description: 'ie polymorphism and interpolation',
+        //   done: false
+        // }
       ]
     }
   },
 
   componentWillMount: function () {
-    var that = this;
-    var url = '/api/todos.json';
+    var that = this;                // Need to keep context of the Todo component in our success and error callbacks
+    var url = '/api/todos.json';    // Path to get all todos from data base
     var data = {};
-    var success = function(data) {
-      var updatedTodos = Object.assign([], that.state.todos);
+    var success = function(data) {  // Ok, data is an object with objects inside i.e. { {...}, {...}, ... }
+      var updatedTodos = Object.assign([], that.state.todos); // We don't want to directly mess with todos on state
       
-      for (var key in data) {
-        if (data.hasOwnProperty(key)) {
-          var todoData = data[key];
-          var todo = {
+      for (var key in data) {                   // We iterate over the main object 'data' to get access to the other objects
+        if (data.hasOwnProperty(key)) {         // Convention for making sure we don't pull any data from prototype
+          var todoData = data[key];             // Grap the object at data[key] -- key will be the place the object is located
+          var todo = {                          // Create a new todo object literal from each object in data object
             id: todoData._id,
             title: todoData.title,
             description: todoData.description,
             done: todoData.done
           };
-          updatedTodos.push(todo);
+          updatedTodos.push(todo);              // Each todo we create, we want to push to updatedTodos
         }
       }
       
-      that.setState({
+      that.setState({  // Set state which will cause a re-render, and we have our data from the DB, I'm excited
         todos: updatedTodos
       });
       
@@ -82,7 +82,7 @@ var Todo = React.createClass({displayName: "Todo",
       console.log(err);
     };
     
-    ajax(url, data, success, error, 'GET');
+    ajax(url, data, success, error, 'GET');    // Need to specify 'GET' since type default is 'POST'
   },
 
   handleInputChange: function(evt) {
