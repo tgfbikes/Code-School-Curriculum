@@ -17,21 +17,52 @@ var TodoCtrl = {
     });
   },
   
+  // Show a todo
   show: function (req, res) {
-    res.json({
-      message: 'show'
+    Todo.findOne({_id: req.params.id}, function (err, todo) {
+      if (err) {
+        res.statusCode(500).json({
+          message: 'Data not found'
+        });
+      } else {
+        res.json(todo);
+      }
     });
   },
-  
+
+  // Create a todo
   create: function (req, res) {
-    res.json({
-      message: 'create'
+    Todo.findOne({_id: req.params.id}, function (err, todo) {
+      if (err) {
+        res.statusCode(500).json({
+          message: 'Data not found'
+        });
+      } else {
+        todo.save(function (err) {
+          if (err) {
+            res.statusCode(500).json({
+              message: 'Data not saved'
+            });
+          } else {
+            res.json(todo);
+          }
+        });
+      }
     });
   },
   
+  // Remove a todo
   destroy: function (req, res) {
-    res.json({
-      message: 'destroy'
+    Todo.remove({_id: req.params.id}, function (err, todo) {
+      if (err) {
+        res.statusCode(500).json({
+          message: 'Data not found'
+        });
+      } else {
+        res.json({
+          message: 'Data removed'
+        });
+      }
     });
   }
 
