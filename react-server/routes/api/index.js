@@ -5,9 +5,9 @@ var TodoCtrl = require('../../controllers/TodoCtrl');
 
 module.exports = function (app) {
 
-  app.get('/todos.json', TodoCtrl.index);
-  app.get('/todos/:id.json', TodoCtrl.show);
-  app.post('/todos/:id.json', TodoCtrl.create);
-  app.delete('/todos/:id.json', TodoCtrl.destory);
+  app.get('/api/todos.json', TodoCtrl.index);
+  app.get('/api/todos/:id.json', TodoCtrl.show);
+  app.post('/api/todos/:id.json', TodoCtrl.create);
+  app.delete('/api/todos/:id.json', TodoCtrl.destory);
 
 };
