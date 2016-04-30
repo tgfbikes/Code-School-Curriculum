@@ -11,7 +11,9 @@ var app = new express();
 // Set up for parsing application/json
 app.use(bodyParser.json());
 // Set up for parsing application/x-www-form-urlencoded
-app.use(bodyParser.urlencoded({extend: true}));
+app.use(bodyParser.urlencoded({
+  extended: true
+}));
 
 // Use jade for template engine
 app.set('views', path.join(__dirname, '/client/views'));
