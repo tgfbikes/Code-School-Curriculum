@@ -58,8 +58,25 @@ var Todo = React.createClass({displayName: "Todo",
     var url = '/api/todos.json';
     var data = {};
     var success = function(data) {
-      var todos = Object.assign([], that.state.todos);
-      console.log(data);
+      var updatedTodos = Object.assign([], that.state.todos);
+      
+      for (var key in data) {
+        if (data.hasOwnProperty(key)) {
+          var todoData = data[key];
+          var todo = {
+            id: todoData._id,
+            title: todoData.title,
+            description: todoData.description,
+            done: todoData.done
+          };
+          updatedTodos.push(todo);
+        }
+      }
+      
+      that.setState({
+        todos: updatedTodos
+      });
+      
     };
     var error = function (xhr, status, err) {
       console.log(err);
