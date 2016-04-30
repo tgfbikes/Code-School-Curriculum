@@ -45,7 +45,7 @@ var Todo = React.createClass({
           title: 'Use big words to sound smart',
           description: 'ie polymorphism and interpolation',
           done: false
-        },
+        }
       ]
     }
   },
@@ -68,7 +68,7 @@ var Todo = React.createClass({
       title: this.state.inputs.title.value,
       description: this.state.inputs.description.value,
       done: false
-    }
+    };
     resetInputs.title.value = '';
     resetInputs.description.value = '';
 
