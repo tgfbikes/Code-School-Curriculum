@@ -8,7 +8,7 @@ var TodoCtrl = {
   index: function (req, res) {
     Todo.find({}, function (err, todos) {
       if (err) {
-        res.statusCode(500).json({ // 500 tells user something went wrong on our end
+        res.status(500).json({ // 500 tells user something went wrong on our end
           message: 'Data not found' // respond with json so front end can error handle
         });
       } else {
@@ -21,7 +21,7 @@ var TodoCtrl = {
   show: function (req, res) {
     Todo.findOne({_id: req.params.id}, function (err, todo) {
       if (err) {
-        res.statusCode(500).json({
+        res.status(500).json({
           message: 'Data not found'
         });
       } else {
@@ -32,20 +32,21 @@ var TodoCtrl = {
 
   // Create a todo
   create: function (req, res) {
-    Todo.findOne({_id: req.params.id}, function (err, todo) {
+    console.log(req.body);
+    var newTodo = new Todo({
+      title: req.body.title,
+      description: req.body.description,
+      done: false
+    });
+    newTodo.save(function (err) {
       if (err) {
-        res.statusCode(500).json({
-          message: 'Data not found'
+        console.log(err);
+        res.status(500).json({
+          message: 'Data not saved'
         });
       } else {
-        todo.save(function (err) {
-          if (err) {
-            res.statusCode(500).json({
-              message: 'Data not saved'
-            });
-          } else {
-            res.json(todo);
-          }
+        res.json({
+          message: 'Data saved'
         });
       }
     });
@@ -55,7 +56,7 @@ var TodoCtrl = {
   destroy: function (req, res) {
     Todo.remove({_id: req.params.id}, function (err, todo) {
       if (err) {
-        res.statusCode(500).json({
+        res.status(500).json({
           message: 'Data not found'
         });
       } else {
