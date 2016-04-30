@@ -64,7 +64,7 @@ var Todo = React.createClass({
       console.log(err);
     };
     
-    ajax(url, data, success, error);
+    ajax(url, data, success, error, 'GET');
   },
 
   handleInputChange: function(evt) {
@@ -119,7 +119,6 @@ var Todo = React.createClass({
 
 
   render: function() {
-    console.log(this.state.todos);
     return (
      <div className="container">
        <div className="row">
