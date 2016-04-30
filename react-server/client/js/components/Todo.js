@@ -1,10 +1,12 @@
 'use strict';
 
-var React = require('react');
+var React    = require('react');
 var TodoList = require('./TodoList');
 var TodoForm = require('./TodoForm');
+var ajax     = require('../helpers/ajax');
 
 var Todo = React.createClass({
+
   getInitialState: function() {
     return {
       inputs: {
@@ -48,6 +50,21 @@ var Todo = React.createClass({
         }
       ]
     }
+  },
+
+  componentWillMount: function () {
+    var that = this;
+    var url = '/api/todos.json';
+    var data = {};
+    var success = function(data) {
+      var todos = Object.assign([], that.state.todos);
+      console.log(data);
+    };
+    var error = function (xhr, status, err) {
+      console.log(err);
+    };
+    
+    ajax(url, data, success, error);
   },
 
   handleInputChange: function(evt) {
