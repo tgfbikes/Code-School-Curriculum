@@ -15,6 +15,24 @@ var TodoCtrl = {
         res.json(todos);
       }
     });
+  },
+  
+  show: function (req, res) {
+    res.json({
+      message: 'show'
+    });
+  },
+  
+  create: function (req, res) {
+    res.json({
+      message: 'create'
+    });
+  },
+  
+  destroy: function (req, res) {
+    res.json({
+      message: 'destroy'
+    });
   }
 
 };
