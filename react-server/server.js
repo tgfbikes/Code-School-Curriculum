@@ -1,6 +1,7 @@
 var express = require('express');
 var path = require('path');
 var jade = require('jade');
+var mongoose = require('mongoose');
 var app = new express();
 
 // Use jade for template engine
@@ -10,10 +11,12 @@ app.set('view engine', 'jade');
 // Set up static routes
 app.use(express.static(__dirname + '/public'));
 
-// Routes for application
-var appRouter = require('./routes/index');
+// Mongoose connection to MongoDB
+// mongoose.connect('mongodb://sking:P@$$word@ds043714.mongolab.com:43714/todos');
+mongoose.connect('mongodb://localhost/todos');
 
-app.use('/', appRouter);
+// Routes for application
+require('./routes/index')(app);
 
 app.listen(3000, function() {
   console.log('Server running..');
