@@ -1,6 +1,10 @@
 'use strict';
 
+var $ = require('jquery');
+
 var ajax = function (url, data, success, error, type='POST') {
+  
+  console.log('fired');
   
   $.ajax({
     url: 'http://localhost:3000' + url,
