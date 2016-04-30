@@ -1,8 +1,17 @@
-var express = require('express');
-var path = require('path');
-var jade = require('jade');
-var mongoose = require('mongoose');
+// Dependencies for app from node modules
+var bodyParser = require('body-parser');
+var express    = require('express');
+var jade       = require('jade');
+var path       = require('path');
+var mongoose   = require('mongoose');
+
+// Create new app based off of Express prototype
 var app = new express();
+
+// Set up for parsing application/json
+app.use(bodyParser.json());
+// Set up for parsing application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({extend: true}));
 
 // Use jade for template engine
 app.set('views', path.join(__dirname, '/client/views'));
