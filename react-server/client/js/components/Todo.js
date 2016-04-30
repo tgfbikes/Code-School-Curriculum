@@ -110,7 +110,6 @@ var Todo = React.createClass({
     
     var success = function (data) {
       console.log('created todo');
-      console.log(data);
       var newTodo = {
         id: data._id,
         title: data.title,
@@ -123,22 +122,40 @@ var Todo = React.createClass({
         inputs: resetInputs
       });
     };
-    var error = function (data) {
+    var error = function (xhr, status, err) {
       console.log('create failed');
+      console.log(err);
     };
     
     ajax(url, data, success, error);
     
   },
 
-  deleteTodo: function(index) {
-    var updatedTodos = Object.assign([], this.state.todos);
+  deleteTodo: function(id) {
+    var that = this;
+    var currentTodos = Object.assign([], this.state.todos);
+    var url = '/api/todos/' + id + '.json';
+    var data = {
+      id: id
+    };
 
-    console.log('delete todo');
-    updatedTodos.splice(index, 1);
-    this.setState({
-      todos: updatedTodos
-    });
+    var success = function (data) {
+      console.log('deleted todo');
+      var updatedTodos = currentTodos.filter(function (todo) {
+        return todo.id !== id;
+      });
+      that.setState({
+        todos: updatedTodos
+      });
+    };
+
+    var error = function (xhr, status, err) {
+      console.log('delete todo failed');
+      console.log(err);
+    };
+
+    ajax(url, data, success, error, 'DELETE');
+
   },
 
   completedTodo: function(index) {
