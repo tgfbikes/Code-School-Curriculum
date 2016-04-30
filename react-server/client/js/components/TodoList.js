@@ -19,8 +19,8 @@ var TodoList = React.createClass({
           {todos.map(function(todo, index){
             return (
               <TodoListItem
-                key={index}
-                index={index}
+                key={todo.id}
+                id={todo.id}
                 todoData={todo}
                 completedTodo={this.props.completedTodo}
                 deleteTodo={this.props.deleteTodo}
