@@ -110,6 +110,7 @@ var Todo = React.createClass({
     
     var success = function (data) {
       console.log('created todo');
+      console.log(data);
       var newTodo = {
         id: data._id,
         title: data.title,

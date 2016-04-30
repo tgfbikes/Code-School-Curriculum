@@ -96,22 +96,40 @@ var Todo = React.createClass({displayName: "Todo",
   addTodo: function(evt) {
     evt.preventDefault();
 
+    var that = this;
     var newTodos = Object.assign([], this.state.todos);
     var resetInputs = Object.assign({}, this.state.inputs);
-
-    var newTodo = {
+    var url = '/api/todos.json';
+    var data = {
       title: this.state.inputs.title.value,
       description: this.state.inputs.description.value,
       done: false
     };
+    
     resetInputs.title.value = '';
     resetInputs.description.value = '';
-
-    newTodos.push(newTodo);
-    this.setState({
-      todos: newTodos,
-      inputs: resetInputs
-    });
+    
+    var success = function (data) {
+      console.log('created todo');
+      console.log(data);
+      var newTodo = {
+        id: data._id,
+        title: data.title,
+        description: data.description,
+        done: data.done
+      };
+      newTodos.push(newTodo);
+      that.setState({
+        todos: newTodos,
+        inputs: resetInputs
+      });
+    };
+    var error = function (data) {
+      console.log('create failed');
+    };
+    
+    ajax(url, data, success, error);
+    
   },
 
   deleteTodo: function(index) {
