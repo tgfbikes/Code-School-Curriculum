@@ -45,9 +45,7 @@ var TodoCtrl = {
           message: 'Data not saved'
         });
       } else {
-        res.json({
-          message: 'Data saved'
-        });
+        res.json(newTodo);
       }
     });
   },
