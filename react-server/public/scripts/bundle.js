@@ -156,18 +156,35 @@ var Todo = React.createClass({displayName: "Todo",
     };
 
     ajax(url, data, success, error, 'DELETE');
-
   },
 
-  completedTodo: function(index) {
+  completedTodo: function(id) {
+    var that = this;
     var updatedTodos = Object.assign([], this.state.todos);
+    var url = '/api/todos/' + id + '.json';
+    var data = {
+      id: id
+    };
+    
+    var success = function (data) {
+      updatedTodos.findIndex(function (element, index, todosArray) {
+        if (element.id === data._id) {
+          console.log(element);
+          todosArray[index] = data;
+        }
+      });
 
-    console.log('completed todo');
-    updatedTodos[index].done = true;
-    this.setState({
-      todos: updatedTodos
-    });
-
+      that.setState({
+        todos: updatedTodos
+      });
+    };
+    
+    var error = function (xhr, status, err) {
+      console.log('updated todo failed');
+      console.log(err);
+    };
+    
+    ajax(url, data, success, error, 'PUT');
   },
 
 
@@ -250,7 +267,7 @@ var TodoList = React.createClass({displayName: "TodoList",
           todos.map(function(todo, index){
             return (
               React.createElement(TodoListItem, {
-                key: todo.id, 
+                key: index, 
                 id: todo.id, 
                 todoData: todo, 
                 completedTodo: this.props.completedTodo, 
@@ -282,7 +299,6 @@ var TodoListItem = React.createClass({displayName: "TodoListItem",
   render: function() {
     var id = this.props.id;
     var todoStatus = this.props.todoData.done ? ' bg-success' : ' bg-info';
-    console.log(todoStatus);
     return (
       React.createElement("li", {className: "todo__list-item clearfix" + todoStatus}, 
         React.createElement("span", null, React.createElement("strong", null, this.props.todoData.title), 

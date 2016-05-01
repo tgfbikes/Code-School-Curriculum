@@ -6,7 +6,6 @@ var TodoListItem = React.createClass({
   render: function() {
     var id = this.props.id;
     var todoStatus = this.props.todoData.done ? ' bg-success' : ' bg-info';
-    console.log(todoStatus);
     return (
       <li className={"todo__list-item clearfix" + todoStatus}>
         <span><strong>{this.props.todoData.title}</strong>
