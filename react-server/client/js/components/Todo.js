@@ -155,18 +155,35 @@ var Todo = React.createClass({
     };
 
     ajax(url, data, success, error, 'DELETE');
-
   },
 
-  completedTodo: function(index) {
+  completedTodo: function(id) {
+    var that = this;
     var updatedTodos = Object.assign([], this.state.todos);
+    var url = '/api/todos/' + id + '.json';
+    var data = {
+      id: id
+    };
+    
+    var success = function (data) {
+      updatedTodos.findIndex(function (element, index, todosArray) {
+        if (element.id === data._id) {
+          console.log(element);
+          todosArray[index] = data;
+        }
+      });
 
-    console.log('completed todo');
-    updatedTodos[index].done = true;
-    this.setState({
-      todos: updatedTodos
-    });
-
+      that.setState({
+        todos: updatedTodos
+      });
+    };
+    
+    var error = function (xhr, status, err) {
+      console.log('updated todo failed');
+      console.log(err);
+    };
+    
+    ajax(url, data, success, error, 'PUT');
   },
 
 
