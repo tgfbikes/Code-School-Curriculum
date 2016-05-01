@@ -162,15 +162,27 @@ var Todo = React.createClass({displayName: "Todo",
     var that = this;
     var updatedTodos = Object.assign([], this.state.todos);
     var url = '/api/todos/' + id + '.json';
-    var data = {
-      id: id
-    };
+    var data = {};
+
+    updatedTodos.forEach(function (todo) {
+      if (todo.id === id) {
+        if (todo.done === false) {
+          todo.done = true;
+          data = todo;
+        } else {
+          todo.done = false;
+          data = todo;
+        }
+      } else {
+        console.log('todo not found in array');
+      }
+    });
     
     var success = function (data) {
-      updatedTodos.findIndex(function (element, index, todosArray) {
-        if (element.id === data._id) {
-          console.log(element);
-          todosArray[index] = data;
+      updatedTodos.forEach(function (todo) {
+        if (todo.id === data._id) {
+          console.log(todo);
+          todo = data;
         }
       });
 
@@ -186,7 +198,6 @@ var Todo = React.createClass({displayName: "Todo",
     
     ajax(url, data, success, error, 'PUT');
   },
-
 
   render: function() {
     return (
