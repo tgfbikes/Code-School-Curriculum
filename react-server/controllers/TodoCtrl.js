@@ -30,6 +30,20 @@ var TodoCtrl = {
     });
   },
 
+  // Update a todo
+  update: function (req, res) {
+    var val = req.body.done;
+    Todo.findByIdAndUpdate(req.params.id, {$set: {done: val}}, function (err, todo) {
+      if (err) {
+        res.status(500).json({
+          message: 'Data not found'
+        });
+      } else {
+        res.json(todo);
+      }
+    });
+  },
+
   // Create a todo
   create: function (req, res) {
     console.log(req.body);
