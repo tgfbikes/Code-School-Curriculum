@@ -71,29 +71,7 @@ var Todo = React.createClass({
   },
 
   deleteTodo: function(id) {
-    var that = this;
-    var currentTodos = Object.assign([], this.state.todos);
-    var url = '/api/todos/' + id + '.json';
-    var data = {
-      id: id
-    };
-
-    var success = function (data) {
-      console.log('deleted todo');
-      var updatedTodos = currentTodos.filter(function (todo) {
-        return todo.id !== id;
-      });
-      that.setState({
-        todos: updatedTodos
-      });
-    };
-
-    var error = function (xhr, status, err) {
-      console.log('delete todo failed');
-      console.log(err);
-    };
-
-    ajax(url, data, success, error, 'DELETE');
+    todoFuncs.delete(this, id);
   },
 
   completedTodo: function(id) {

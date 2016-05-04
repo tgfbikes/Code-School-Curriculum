@@ -78,8 +78,29 @@ var todoFuncs = {
     
   },
   
-  delete: function (self) {
-    
+  delete: function (that, id) {
+    var currentTodos = Object.assign([], that.state.todos);
+    var url = '/api/todos/' + id + '.json';
+    var data = {
+      id: id
+    };
+
+    var success = function (data) {
+      console.log('deleted todo');
+      var updatedTodos = currentTodos.filter(function (todo) {
+        return todo.id !== id;
+      });
+      that.setState({
+        todos: updatedTodos
+      });
+    };
+
+    var error = function (xhr, status, err) {
+      console.log('delete todo failed');
+      console.log(err);
+    };
+
+    ajax(url, data, success, error, 'DELETE');
   }
   
 };
