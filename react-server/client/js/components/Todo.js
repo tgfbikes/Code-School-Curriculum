@@ -16,7 +16,7 @@ var Todo = React.createClass({
           name: 'title',
           value: '',
           className: 'form-control',
-          placeholder: 'Title',
+          placeholder: 'Title'
         },
         description: {
           type: 'text',
@@ -24,7 +24,7 @@ var Todo = React.createClass({
           name: 'description',
           value: '',
           className: 'form-control',
-          placeholder: 'Description',
+          placeholder: 'Description'
         }
       },
       todos: [
