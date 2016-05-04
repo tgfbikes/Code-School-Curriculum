@@ -3,7 +3,6 @@
 var React     = require('react');
 var TodoList  = require('./TodoList');
 var TodoForm  = require('./TodoForm');
-var ajax      = require('../helpers/ajax');
 var todoFuncs = require('../helpers/todoFuncs');
 
 var Todo = React.createClass({
@@ -75,44 +74,7 @@ var Todo = React.createClass({
   },
 
   completedTodo: function(id) {
-    var that = this;
-    var updatedTodos = Object.assign([], this.state.todos);
-    var url = '/api/todos/' + id + '.json';
-    var data = {};
-
-    updatedTodos.forEach(function (todo) {
-      if (todo.id === id) {
-        if (todo.done === false) {
-          todo.done = true;
-          data = todo;
-        } else {
-          todo.done = false;
-          data = todo;
-        }
-      } else {
-        console.log('todo not found in array');
-      }
-    });
-    
-    var success = function (data) {
-      updatedTodos.forEach(function (todo) {
-        if (todo.id === data._id) {
-          console.log(todo);
-          todo = data;
-        }
-      });
-
-      that.setState({
-        todos: updatedTodos
-      });
-    };
-    
-    var error = function (xhr, status, err) {
-      console.log('updated todo failed');
-      console.log(err);
-    };
-    
-    ajax(url, data, success, error, 'PUT');
+    todoFuncs.update(this, id);
   },
 
   render: function() {

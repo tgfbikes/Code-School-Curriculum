@@ -74,8 +74,43 @@ var todoFuncs = {
     ajax(url, data, success, error);
   },
   
-  update: function (self) {
-    
+  update: function (that, id) {
+    var updatedTodos = Object.assign([], that.state.todos);
+    var url = '/api/todos/' + id + '.json';
+    var data = {};
+
+    updatedTodos.forEach(function (todo) {
+      if (todo.id === id) {
+        if (todo.done === false) {
+          todo.done = true;
+          data = todo;
+        } else {
+          todo.done = false;
+          data = todo;
+        }
+      } else {
+        console.log('todo not found in array');
+      }
+    });
+
+    var success = function (data) {
+      updatedTodos.forEach(function (todo) {
+        if (todo.id === data._id) {
+          todo = data;
+        }
+      });
+
+      that.setState({
+        todos: updatedTodos
+      });
+    };
+
+    var error = function (xhr, status, err) {
+      console.log('updated todo failed');
+      console.log(err);
+    };
+
+    ajax(url, data, success, error, 'PUT');
   },
   
   delete: function (that, id) {
