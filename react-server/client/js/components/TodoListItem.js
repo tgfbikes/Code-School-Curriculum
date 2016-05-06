@@ -5,6 +5,7 @@ var React = require('react');
 var TodoListItem = React.createClass({
   render: function() {
     var id = this.props.id;
+    var done = this.props.done;
     var todoStatus = this.props.todoData.done ? ' todo--completed' : ' bg-info';
     var completedButtonText = this.props.todoData.done ? 'Not Completed' : 'Completed';
     return (
@@ -13,8 +14,8 @@ var TodoListItem = React.createClass({
         <br />
         - {this.props.todoData.description}</span>
         <div className="pull-right">
-          <div className="btn btn-success btn-xs" onClick={this.props.completedTodo.bind(null, id)}>{completedButtonText}</div>
-          <div className="btn btn-danger btn-xs" onClick={this.props.deleteTodo.bind(null, id)}>Delete</div>
+          <div className="btn btn-success btn-xs" onClick={this.props.completedTodo.bind(null, id, done)}>{completedButtonText}</div>
+          <div className="btn btn-danger btn-xs" onClick={this.props.deleteTodo.bind(null, id, done)}>Delete</div>
         </div>
       </li>
     );
