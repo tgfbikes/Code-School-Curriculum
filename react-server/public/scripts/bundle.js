@@ -131,7 +131,7 @@ var TextInput = require('./form/TextInput');
 var TodoForm = React.createClass({displayName: "TodoForm",
   render: function() {
     return (
-      React.createElement("div", {className: "col-md-6"}, 
+      React.createElement("div", {className: "col-md-4"}, 
         React.createElement("h2", null, "Add a Task"), 
         React.createElement("form", {onSubmit: this.props.addTodo}, 
           React.createElement("div", {className: "form-group"}, 
@@ -192,7 +192,7 @@ var TodoList = React.createClass({displayName: "TodoList",
     }
 
     return (
-      React.createElement("div", {className: "col-md-6"}, 
+      React.createElement("div", {className: "col-md-4"}, 
         React.createElement("h2", null, "Things To Do"), 
         listOfTodos
       )
@@ -218,8 +218,8 @@ var TodoListItem = React.createClass({displayName: "TodoListItem",
         React.createElement("br", null), 
         "- ", this.props.todoData.description), 
         React.createElement("div", {className: "pull-right"}, 
-          React.createElement("div", {className: "btn btn-success btn-sm", onClick: this.props.completedTodo.bind(null, id)}, completedButtonText), 
-          React.createElement("div", {className: "btn btn-danger btn-sm", onClick: this.props.deleteTodo.bind(null, id)}, "Delete")
+          React.createElement("div", {className: "btn btn-success btn-xs", onClick: this.props.completedTodo.bind(null, id)}, completedButtonText), 
+          React.createElement("div", {className: "btn btn-danger btn-xs", onClick: this.props.deleteTodo.bind(null, id)}, "Delete")
         )
       )
     );
