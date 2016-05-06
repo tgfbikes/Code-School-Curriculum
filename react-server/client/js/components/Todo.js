@@ -95,6 +95,8 @@ var Todo = React.createClass({
          />
          <TodoCompletedList
            completedTodos={this.state.completedTodos}
+           completedTodo={this.completedTodo}
+           deleteTodo={this.deleteTodo}
          />
        </div>
      </div>
