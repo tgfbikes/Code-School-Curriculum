@@ -1,0 +1,18 @@
+.todo__list-item {
+  padding: 20px;
+  margin-bottom: 20px;
+  border-radius: 5px; }
+
+.todo__hero-header {
+  color: #EBCE93; }
+
+.todo__hero-text {
+  color: #3FA394; }
+
+.todo--completed {
+  background-color: darkgrey; }
+
+.jumbotron {
+  background-color: #F3FFE2; }
+
+/*# sourceMappingURL=main.css.map */

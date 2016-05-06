@@ -17,7 +17,7 @@ var Todo = React.createClass({displayName: "Todo",
           name: 'title',
           value: '',
           className: 'form-control',
-          placeholder: 'Title',
+          placeholder: 'Title'
         },
         description: {
           type: 'text',
@@ -25,7 +25,7 @@ var Todo = React.createClass({displayName: "Todo",
           name: 'description',
           value: '',
           className: 'form-control',
-          placeholder: 'Description',
+          placeholder: 'Description'
         }
       },
       todos: [
@@ -188,14 +188,15 @@ var React = require('react');
 var TodoListItem = React.createClass({displayName: "TodoListItem",
   render: function() {
     var id = this.props.id;
-    var todoStatus = this.props.todoData.done ? ' bg-success' : ' bg-info';
+    var todoStatus = this.props.todoData.done ? ' todo--completed' : ' bg-info';
+    var completedButtonText = this.props.todoData.done ? 'Not Completed' : 'Completed';
     return (
       React.createElement("li", {className: "todo__list-item clearfix" + todoStatus}, 
         React.createElement("span", null, React.createElement("strong", null, this.props.todoData.title), 
         React.createElement("br", null), 
         "- ", this.props.todoData.description), 
         React.createElement("div", {className: "pull-right"}, 
-          React.createElement("div", {className: "btn btn-success btn-sm", onClick: this.props.completedTodo.bind(null, id)}, "Completed"), 
+          React.createElement("div", {className: "btn btn-success btn-sm", onClick: this.props.completedTodo.bind(null, id)}, completedButtonText), 
           React.createElement("div", {className: "btn btn-danger btn-sm", onClick: this.props.deleteTodo.bind(null, id)}, "Delete")
         )
       )
