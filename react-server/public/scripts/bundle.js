@@ -95,7 +95,9 @@ var Todo = React.createClass({displayName: "Todo",
            deleteTodo: this.deleteTodo}
          ), 
          React.createElement(TodoCompletedList, {
-           completedTodos: this.state.completedTodos}
+           completedTodos: this.state.completedTodos, 
+           completedTodo: this.completedTodo, 
+           deleteTodo: this.deleteTodo}
          )
        )
      )
@@ -108,15 +110,33 @@ module.exports = Todo;
 },{"../helpers/todoFuncs":8,"./TodoCompleteList":2,"./TodoForm":3,"./TodoList":4,"react":166}],2:[function(require,module,exports){
 'use strict';
 
-var React = require('react');
+var React        = require('react');
+var TodoListItem = require('./TodoListItem');
 
 
 var TodoCompleteList = React.createClass({displayName: "TodoCompleteList",
   render: function () {
+    var listOfCompletedTodos;
     var completedTodos = this.props.completedTodos;
     if (completedTodos.length === 0) {
-      var listOfCompletedTodos = (
+      listOfCompletedTodos = (
         React.createElement("p", null, "No completed tasks")
+      );
+    } else {
+      listOfCompletedTodos = (
+        React.createElement("ul", {className: "list-unstyled"}, 
+          completedTodos.map(function(todo, index){
+            return (
+              React.createElement(TodoListItem, {
+                key: index, 
+                id: todo.id, 
+                todoData: todo, 
+                completedTodo: this.props.completedTodo, 
+                deleteTodo: this.props.deleteTodo}
+              )
+            );
+          }.bind(this))
+        )
       );
     }
     return (
@@ -130,7 +150,7 @@ var TodoCompleteList = React.createClass({displayName: "TodoCompleteList",
 
 module.exports = TodoCompleteList;
 
-},{"react":166}],3:[function(require,module,exports){
+},{"./TodoListItem":5,"react":166}],3:[function(require,module,exports){
 'use strict';
 
 var React = require('react');
@@ -299,6 +319,7 @@ var todoFuncs = {
     var data = {};
     var success = function(data) {  // Ok, data is an object with objects inside i.e. { {...}, {...}, ... }
       var updatedTodos = Object.assign([], that.state.todos); // We don't want to directly mess with todos on state
+      var updatedCompletedTodos = Object.assign([], that.state.completedTodos);
 
       for (var key in data) {                   // We iterate over the main object 'data' to get access to the other objects
         if (data.hasOwnProperty(key)) {         // Convention for making sure we don't pull any data from prototype
@@ -309,12 +330,17 @@ var todoFuncs = {
             description: todoData.description,
             done: todoData.done
           };
-          updatedTodos.push(todo);              // Each todo we create, we want to push to updatedTodos
+          if (todo.done) {                      // Each todo we create, we want to push to updatedTodos or updatedCompletedTodos
+            updatedCompletedTodos.push(todo);
+          } else {
+            updatedTodos.push(todo);              
+          }
         }
       }
 
       that.setState({  // Set state which will cause a re-render, and we have our data from the DB, I'm excited
-        todos: updatedTodos
+        todos: updatedTodos,
+        completedTodos: updatedCompletedTodos
       });
 
     };
@@ -366,6 +392,7 @@ var todoFuncs = {
   
   update: function (that, id) {
     var updatedTodos = Object.assign([], that.state.todos);
+    var updatedCompletedTodos = Object.assign([], that.state.todos);
     var url = '/api/todos/' + id + '.json';
     var data = {};
 
@@ -384,14 +411,23 @@ var todoFuncs = {
     });
 
     var success = function (data) {
-      updatedTodos.forEach(function (todo) {
-        if (todo.id === data._id) {
-          todo = data;
-        }
-      });
+      if (data.done) {
+        updatedCompletedTodos.forEach(function (todo) {
+          if (todo.id === data._id) {
+            todo = data;
+          }
+        });
+      } else {
+        updatedTodos.forEach(function (todo) {
+          if (todo.id === data._id) {
+            todo = data;
+          }
+        });
+      }
 
       that.setState({
-        todos: updatedTodos
+        todos: updatedTodos,
+        completedTodos: updatedCompletedTodos
       });
     };
 

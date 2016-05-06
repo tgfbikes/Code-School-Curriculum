@@ -9,6 +9,7 @@ var todoFuncs = {
     var data = {};
     var success = function(data) {  // Ok, data is an object with objects inside i.e. { {...}, {...}, ... }
       var updatedTodos = Object.assign([], that.state.todos); // We don't want to directly mess with todos on state
+      var updatedCompletedTodos = Object.assign([], that.state.completedTodos);
 
       for (var key in data) {                   // We iterate over the main object 'data' to get access to the other objects
         if (data.hasOwnProperty(key)) {         // Convention for making sure we don't pull any data from prototype
@@ -19,12 +20,17 @@ var todoFuncs = {
             description: todoData.description,
             done: todoData.done
           };
-          updatedTodos.push(todo);              // Each todo we create, we want to push to updatedTodos
+          if (todo.done) {                      // Each todo we create, we want to push to updatedTodos or updatedCompletedTodos
+            updatedCompletedTodos.push(todo);
+          } else {
+            updatedTodos.push(todo);              
+          }
         }
       }
 
       that.setState({  // Set state which will cause a re-render, and we have our data from the DB, I'm excited
-        todos: updatedTodos
+        todos: updatedTodos,
+        completedTodos: updatedCompletedTodos
       });
 
     };
@@ -74,8 +80,10 @@ var todoFuncs = {
     ajax(url, data, success, error);
   },
   
-  update: function (that, id) {
+  // todo: passing in done flag, move to one list or the other
+  update: function (that, id, done) {
     var updatedTodos = Object.assign([], that.state.todos);
+    var updatedCompletedTodos = Object.assign([], that.state.todos);
     var url = '/api/todos/' + id + '.json';
     var data = {};
 
@@ -94,14 +102,23 @@ var todoFuncs = {
     });
 
     var success = function (data) {
-      updatedTodos.forEach(function (todo) {
-        if (todo.id === data._id) {
-          todo = data;
-        }
-      });
+      if (data.done) {
+        updatedCompletedTodos.forEach(function (todo) {
+          if (todo.id === data._id) {
+            todo = data;
+          }
+        });
+      } else {
+        updatedTodos.forEach(function (todo) {
+          if (todo.id === data._id) {
+            todo = data;
+          }
+        });
+      }
 
       that.setState({
-        todos: updatedTodos
+        todos: updatedTodos,
+        completedTodos: updatedCompletedTodos
       });
     };
 
