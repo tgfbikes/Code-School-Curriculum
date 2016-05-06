@@ -6,7 +6,7 @@ var TextInput = require('./form/TextInput');
 var TodoForm = React.createClass({
   render: function() {
     return (
-      <div className="col-md-6">
+      <div className="col-md-4">
         <h2>Add a Task</h2>
         <form onSubmit={this.props.addTodo}>
           <div className="form-group">

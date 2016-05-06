@@ -1,9 +1,10 @@
 'use strict';
 
-var React     = require('react');
-var TodoList  = require('./TodoList');
-var TodoForm  = require('./TodoForm');
-var todoFuncs = require('../helpers/todoFuncs');
+var React             = require('react');
+var TodoList          = require('./TodoList');
+var TodoForm          = require('./TodoForm');
+var TodoCompletedList = require('./TodoCompleteList');
+var todoFuncs         = require('../helpers/todoFuncs');
 
 var Todo = React.createClass({
 
@@ -48,7 +49,8 @@ var Todo = React.createClass({
         //   description: 'ie polymorphism and interpolation',
         //   done: false
         // }
-      ]
+      ],
+      completedTodos: []
     }
   },
 
@@ -90,6 +92,9 @@ var Todo = React.createClass({
            todos={this.state.todos}
            completedTodo={this.completedTodo}
            deleteTodo={this.deleteTodo}
+         />
+         <TodoCompletedList
+           completedTodos={this.state.completedTodos}
          />
        </div>
      </div>

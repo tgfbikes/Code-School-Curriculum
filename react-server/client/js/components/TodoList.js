@@ -32,7 +32,7 @@ var TodoList = React.createClass({
     }
 
     return (
-      <div className="col-md-6">
+      <div className="col-md-4">
         <h2>Things To Do</h2>
         {listOfTodos}
       </div>
