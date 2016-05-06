@@ -50,7 +50,8 @@ var Todo = React.createClass({displayName: "Todo",
         //   description: 'ie polymorphism and interpolation',
         //   done: false
         // }
-      ]
+      ],
+      completedTodos: []
     }
   },
 
@@ -93,8 +94,8 @@ var Todo = React.createClass({displayName: "Todo",
            completedTodo: this.completedTodo, 
            deleteTodo: this.deleteTodo}
          ), 
-         React.createElement(TodoCompletedList, null
-           
+         React.createElement(TodoCompletedList, {
+           completedTodos: this.state.completedTodos}
          )
        )
      )
@@ -112,9 +113,16 @@ var React = require('react');
 
 var TodoCompleteList = React.createClass({displayName: "TodoCompleteList",
   render: function () {
+    var completedTodos = this.props.completedTodos;
+    if (completedTodos.length === 0) {
+      var listOfCompletedTodos = (
+        React.createElement("p", null, "No completed tasks")
+      );
+    }
     return (
       React.createElement("div", {className: "col-md-4"}, 
-        React.createElement("h2", null, "Completed Tasks")
+        React.createElement("h2", null, "Completed Tasks"), 
+        listOfCompletedTodos
       )
     );
   }
