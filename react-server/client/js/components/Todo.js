@@ -49,7 +49,8 @@ var Todo = React.createClass({
         //   description: 'ie polymorphism and interpolation',
         //   done: false
         // }
-      ]
+      ],
+      completedTodos: []
     }
   },
 
@@ -93,7 +94,7 @@ var Todo = React.createClass({
            deleteTodo={this.deleteTodo}
          />
          <TodoCompletedList
-           
+           completedTodos={this.state.completedTodos}
          />
        </div>
      </div>
