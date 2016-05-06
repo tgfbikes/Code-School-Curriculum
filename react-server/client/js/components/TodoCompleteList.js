@@ -1,14 +1,33 @@
 'use strict';
 
-var React = require('react');
+var React        = require('react');
+var TodoListItem = require('./TodoListItem');
 
 
 var TodoCompleteList = React.createClass({
   render: function () {
+    var listOfCompletedTodos;
     var completedTodos = this.props.completedTodos;
     if (completedTodos.length === 0) {
-      var listOfCompletedTodos = (
+      listOfCompletedTodos = (
         <p>No completed tasks</p>
+      );
+    } else {
+      listOfCompletedTodos = (
+        <ul className="list-unstyled">
+          {completedTodos.map(function(todo, index){
+            return (
+              <TodoListItem
+                key={index}
+                id={todo.id}
+                done={todo.done}
+                todoData={todo}
+                completedTodo={this.props.completedTodo}
+                deleteTodo={this.props.deleteTodo}
+              />
+            );
+          }.bind(this))}
+        </ul>
       );
     }
     return (
