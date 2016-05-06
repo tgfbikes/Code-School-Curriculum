@@ -21,6 +21,7 @@ var TodoList = React.createClass({
               <TodoListItem
                 key={index}
                 id={todo.id}
+                done={todo.done}
                 todoData={todo}
                 completedTodo={this.props.completedTodo}
                 deleteTodo={this.props.deleteTodo}
