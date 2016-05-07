@@ -86,7 +86,7 @@ var todoFuncs = {
     var updatedCompletedTodos = Object.assign([], that.state.completedTodos);
     var url = '/api/todos/' + id + '.json';
     var data = {};
-
+    console.log(done);
     if (done) {
       // Get from completedTodos
       updatedCompletedTodos.forEach(function (todo) {
@@ -113,19 +113,19 @@ var todoFuncs = {
     var success = function (data) {
       console.log(data);
       if (data.done) {
-        updatedCompletedTodos.forEach(function (todo, index) {
-          if (todo.id === data._id) {
-            updatedCompletedTodos.splice(index, 1);
-          }
-        });
-        updatedTodos.push(data);
-      } else {
         updatedTodos.forEach(function (todo, index) {
           if (todo.id === data._id) {
             updatedTodos.splice(index, 1);
           }
         });
         updatedCompletedTodos.push(data);
+      } else {
+        updatedCompletedTodos.forEach(function (todo, index) {
+          if (todo.id === data._id) {
+            updatedCompletedTodos.splice(index, 1);
+          }
+        });
+        updatedTodos.push(data);
       }
 
       that.setState({
