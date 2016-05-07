@@ -130,6 +130,7 @@ var TodoCompleteList = React.createClass({displayName: "TodoCompleteList",
               React.createElement(TodoListItem, {
                 key: index, 
                 id: todo.id, 
+                done: todo.done, 
                 todoData: todo, 
                 completedTodo: this.props.completedTodo, 
                 deleteTodo: this.props.deleteTodo}
@@ -209,6 +210,7 @@ var TodoList = React.createClass({displayName: "TodoList",
               React.createElement(TodoListItem, {
                 key: index, 
                 id: todo.id, 
+                done: todo.done, 
                 todoData: todo, 
                 completedTodo: this.props.completedTodo, 
                 deleteTodo: this.props.deleteTodo}
@@ -238,6 +240,7 @@ var React = require('react');
 var TodoListItem = React.createClass({displayName: "TodoListItem",
   render: function() {
     var id = this.props.id;
+    var done = this.props.done;
     var todoStatus = this.props.todoData.done ? ' todo--completed' : ' bg-info';
     var completedButtonText = this.props.todoData.done ? 'Not Completed' : 'Completed';
     return (
@@ -246,8 +249,8 @@ var TodoListItem = React.createClass({displayName: "TodoListItem",
         React.createElement("br", null), 
         "- ", this.props.todoData.description), 
         React.createElement("div", {className: "pull-right"}, 
-          React.createElement("div", {className: "btn btn-success btn-xs", onClick: this.props.completedTodo.bind(null, id)}, completedButtonText), 
-          React.createElement("div", {className: "btn btn-danger btn-xs", onClick: this.props.deleteTodo.bind(null, id)}, "Delete")
+          React.createElement("div", {className: "btn btn-success btn-xs", onClick: this.props.completedTodo.bind(null, id, done)}, completedButtonText), 
+          React.createElement("div", {className: "btn btn-danger btn-xs", onClick: this.props.deleteTodo.bind(null, id, done)}, "Delete")
         )
       )
     );
@@ -286,8 +289,6 @@ module.exports = TextInput;
 var $ = require('jquery');
 
 var ajax = function (url, data, success, error, type='POST') {
-  
-  console.log('fired');
   
   $.ajax({
     url: 'http://localhost:3000' + url,
@@ -390,39 +391,52 @@ var todoFuncs = {
     ajax(url, data, success, error);
   },
   
-  update: function (that, id) {
+  // todo: passing in done flag, move to one list or the other
+  update: function (that, id, done) {
     var updatedTodos = Object.assign([], that.state.todos);
-    var updatedCompletedTodos = Object.assign([], that.state.todos);
+    var updatedCompletedTodos = Object.assign([], that.state.completedTodos);
     var url = '/api/todos/' + id + '.json';
     var data = {};
 
-    updatedTodos.forEach(function (todo) {
-      if (todo.id === id) {
-        if (todo.done === false) {
+    if (done) {
+      // Get from completedTodos
+      updatedCompletedTodos.forEach(function (todo) {
+        if (todo.id === id) {
+          todo.done = false;
+          data = todo;
+        } else {
+          console.log('todo not found in array');
+        }
+      });
+      
+    } else {
+      // Get from todos
+      updatedTodos.forEach(function (todo) {
+        if (todo.id === id) {
           todo.done = true;
           data = todo;
         } else {
-          todo.done = false;
-          data = todo;
+          console.log('todo not found in array');
         }
-      } else {
-        console.log('todo not found in array');
-      }
-    });
+      });
+    }
 
     var success = function (data) {
+      console.log(data);
       if (data.done) {
-        updatedCompletedTodos.forEach(function (todo) {
+        updatedCompletedTodos.forEach(function (todo, index) {
           if (todo.id === data._id) {
-            todo = data;
+            updatedCompletedTodos.splice(index, 1);
           }
         });
+        updatedTodos.push(data);
       } else {
-        updatedTodos.forEach(function (todo) {
+        updatedTodos.forEach(function (todo, index) {
           if (todo.id === data._id) {
-            todo = data;
+            updatedTodos.splice(index, 1);
           }
         });
+        updatedCompletedTodos.push(data);
       }
 
       that.setState({

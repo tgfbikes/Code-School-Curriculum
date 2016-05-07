@@ -83,37 +83,49 @@ var todoFuncs = {
   // todo: passing in done flag, move to one list or the other
   update: function (that, id, done) {
     var updatedTodos = Object.assign([], that.state.todos);
-    var updatedCompletedTodos = Object.assign([], that.state.todos);
+    var updatedCompletedTodos = Object.assign([], that.state.completedTodos);
     var url = '/api/todos/' + id + '.json';
     var data = {};
 
-    updatedTodos.forEach(function (todo) {
-      if (todo.id === id) {
-        if (todo.done === false) {
+    if (done) {
+      // Get from completedTodos
+      updatedCompletedTodos.forEach(function (todo) {
+        if (todo.id === id) {
+          todo.done = false;
+          data = todo;
+        } else {
+          console.log('todo not found in array');
+        }
+      });
+      
+    } else {
+      // Get from todos
+      updatedTodos.forEach(function (todo) {
+        if (todo.id === id) {
           todo.done = true;
           data = todo;
         } else {
-          todo.done = false;
-          data = todo;
+          console.log('todo not found in array');
         }
-      } else {
-        console.log('todo not found in array');
-      }
-    });
+      });
+    }
 
     var success = function (data) {
+      console.log(data);
       if (data.done) {
-        updatedCompletedTodos.forEach(function (todo) {
+        updatedCompletedTodos.forEach(function (todo, index) {
           if (todo.id === data._id) {
-            todo = data;
+            updatedCompletedTodos.splice(index, 1);
           }
         });
+        updatedTodos.push(data);
       } else {
-        updatedTodos.forEach(function (todo) {
+        updatedTodos.forEach(function (todo, index) {
           if (todo.id === data._id) {
-            todo = data;
+            updatedTodos.splice(index, 1);
           }
         });
+        updatedCompletedTodos.push(data);
       }
 
       that.setState({
