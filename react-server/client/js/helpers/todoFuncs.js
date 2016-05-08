@@ -86,15 +86,15 @@ var todoFuncs = {
     var updatedCompletedTodos = Object.assign([], that.state.completedTodos);
     var url = '/api/todos/' + id + '.json';
     var data = {};
-    console.log(done);
+    
     if (done) {
       // Get from completedTodos
       updatedCompletedTodos.forEach(function (todo) {
         if (todo.id === id) {
-          todo.done = false;
           data = todo;
+          data.done = false;
         } else {
-          console.log('todo not found in array');
+          console.log('todo not found in updatedCompletedTodos');
         }
       });
       
@@ -102,10 +102,10 @@ var todoFuncs = {
       // Get from todos
       updatedTodos.forEach(function (todo) {
         if (todo.id === id) {
-          todo.done = true;
           data = todo;
+          data.done = true;
         } else {
-          console.log('todo not found in array');
+          console.log('todo not found in updatedTodos');
         }
       });
     }
@@ -138,7 +138,7 @@ var todoFuncs = {
       console.log('updated todo failed');
       console.log(err);
     };
-
+    console.log(data);
     ajax(url, data, success, error, 'PUT');
   },
   

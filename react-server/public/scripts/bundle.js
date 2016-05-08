@@ -76,8 +76,8 @@ var Todo = React.createClass({displayName: "Todo",
     todoFuncs.delete(this, id);
   },
 
-  completedTodo: function(id) {
-    todoFuncs.update(this, id);
+  completedTodo: function(id, done) {
+    todoFuncs.update(this, id, done);
   },
 
   render: function() {
@@ -290,6 +290,8 @@ var $ = require('jquery');
 
 var ajax = function (url, data, success, error, type='POST') {
   
+  console.log(data);
+  
   $.ajax({
     url: 'http://localhost:3000' + url,
     datatype: 'json',
@@ -397,15 +399,15 @@ var todoFuncs = {
     var updatedCompletedTodos = Object.assign([], that.state.completedTodos);
     var url = '/api/todos/' + id + '.json';
     var data = {};
-
+    
     if (done) {
       // Get from completedTodos
       updatedCompletedTodos.forEach(function (todo) {
         if (todo.id === id) {
-          todo.done = false;
           data = todo;
+          data.done = false;
         } else {
-          console.log('todo not found in array');
+          console.log('todo not found in updatedCompletedTodos');
         }
       });
       
@@ -413,10 +415,10 @@ var todoFuncs = {
       // Get from todos
       updatedTodos.forEach(function (todo) {
         if (todo.id === id) {
-          todo.done = true;
           data = todo;
+          data.done = true;
         } else {
-          console.log('todo not found in array');
+          console.log('todo not found in updatedTodos');
         }
       });
     }
@@ -424,19 +426,19 @@ var todoFuncs = {
     var success = function (data) {
       console.log(data);
       if (data.done) {
-        updatedCompletedTodos.forEach(function (todo, index) {
-          if (todo.id === data._id) {
-            updatedCompletedTodos.splice(index, 1);
-          }
-        });
-        updatedTodos.push(data);
-      } else {
         updatedTodos.forEach(function (todo, index) {
           if (todo.id === data._id) {
             updatedTodos.splice(index, 1);
           }
         });
         updatedCompletedTodos.push(data);
+      } else {
+        updatedCompletedTodos.forEach(function (todo, index) {
+          if (todo.id === data._id) {
+            updatedCompletedTodos.splice(index, 1);
+          }
+        });
+        updatedTodos.push(data);
       }
 
       that.setState({
@@ -449,7 +451,7 @@ var todoFuncs = {
       console.log('updated todo failed');
       console.log(err);
     };
-
+    console.log(data);
     ajax(url, data, success, error, 'PUT');
   },
   
