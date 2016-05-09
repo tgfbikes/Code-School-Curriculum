@@ -4,8 +4,6 @@ var $ = require('jquery');
 
 var ajax = function (url, data, success, error, type='POST') {
   
-  console.log(data);
-  
   $.ajax({
     url: 'http://localhost:3000' + url,
     datatype: 'json',

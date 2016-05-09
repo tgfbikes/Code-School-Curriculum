@@ -111,21 +111,20 @@ var todoFuncs = {
     }
 
     var success = function (data) {
-      console.log(data);
       if (data.done) {
-        updatedTodos.forEach(function (todo, index) {
-          if (todo.id === data._id) {
-            updatedTodos.splice(index, 1);
-          }
-        });
-        updatedCompletedTodos.push(data);
-      } else {
-        updatedCompletedTodos.forEach(function (todo, index) {
-          if (todo.id === data._id) {
-            updatedCompletedTodos.splice(index, 1);
-          }
-        });
+        // updatedTodos.forEach(function (todo, index) {
+        //   if (todo.id === data._id) {
+        //     updatedTodos.splice(index, 1);
+        //   }
+        // });
         updatedTodos.push(data);
+      } else {
+        // updatedCompletedTodos.forEach(function (todo, index) {
+        //   if (todo.id === data._id) {
+        //     updatedCompletedTodos.splice(index, 1);
+        //   }
+        // });
+        updatedCompletedTodos.push(data);
       }
 
       that.setState({

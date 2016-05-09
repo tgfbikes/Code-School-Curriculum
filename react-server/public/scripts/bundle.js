@@ -81,6 +81,8 @@ var Todo = React.createClass({displayName: "Todo",
   },
 
   render: function() {
+    console.log(this.state.todos);
+    console.log(this.state.completedTodos);
     return (
      React.createElement("div", {className: "container"}, 
        React.createElement("div", {className: "row"}, 
@@ -290,8 +292,6 @@ var $ = require('jquery');
 
 var ajax = function (url, data, success, error, type='POST') {
   
-  console.log(data);
-  
   $.ajax({
     url: 'http://localhost:3000' + url,
     datatype: 'json',
@@ -424,21 +424,20 @@ var todoFuncs = {
     }
 
     var success = function (data) {
-      console.log(data);
       if (data.done) {
-        updatedTodos.forEach(function (todo, index) {
-          if (todo.id === data._id) {
-            updatedTodos.splice(index, 1);
-          }
-        });
-        updatedCompletedTodos.push(data);
-      } else {
-        updatedCompletedTodos.forEach(function (todo, index) {
-          if (todo.id === data._id) {
-            updatedCompletedTodos.splice(index, 1);
-          }
-        });
+        // updatedTodos.forEach(function (todo, index) {
+        //   if (todo.id === data._id) {
+        //     updatedTodos.splice(index, 1);
+        //   }
+        // });
         updatedTodos.push(data);
+      } else {
+        // updatedCompletedTodos.forEach(function (todo, index) {
+        //   if (todo.id === data._id) {
+        //     updatedCompletedTodos.splice(index, 1);
+        //   }
+        // });
+        updatedCompletedTodos.push(data);
       }
 
       that.setState({

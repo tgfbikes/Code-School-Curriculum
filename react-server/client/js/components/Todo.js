@@ -80,6 +80,8 @@ var Todo = React.createClass({
   },
 
   render: function() {
+    console.log(this.state.todos);
+    console.log(this.state.completedTodos);
     return (
      <div className="container">
        <div className="row">
