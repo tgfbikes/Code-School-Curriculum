@@ -286,6 +286,8 @@ module.exports = TextInput;
 },{"react":167}],7:[function(require,module,exports){
 'use strict';
 
+// Following Constructor Pattern
+
 function Todo(id, title, description, done) {
   this.id = id;
   this.title = title;
@@ -384,12 +386,7 @@ var todoFuncs = {
 
     var success = function (data) {
       console.log('created todo');
-      var newTodo = {
-        id: data._id,
-        title: data.title,
-        description: data.description,
-        done: data.done
-      };
+      var newTodo = new Todo(data._id, data.title, data.description, data.done);
       newTodos.push(newTodo);
       that.setState({
         todos: newTodos,
@@ -438,12 +435,7 @@ var todoFuncs = {
         });
 
         // Create todo
-        var updatedCompletedTodo = {
-          title: data.title,
-          description: data.description,
-          id: data._id,
-          done: data.done
-        };
+        var updatedCompletedTodo = new Todo(data._id, data.title, data.description, data.done);
         updatedCompletedTodos.push(updatedCompletedTodo);
       } else {
         updatedCompletedTodos.forEach(function (todo, index) {
@@ -452,12 +444,7 @@ var todoFuncs = {
           }
         });
         
-        var updatedTodo = {
-          title: data.title,
-          description: data.description,
-          id: data._id,
-          done: data.done
-        };
+        var updatedTodo = new Todo(data._id, data.title, data.description, data.done);
         updatedTodos.push(updatedTodo);
       }
     

@@ -61,7 +61,7 @@ var todoFuncs = {
 
     var success = function (data) {
       console.log('created todo');
-      var newTodo = new Todo(data.id, data.title, data.description, data.done);
+      var newTodo = new Todo(data._id, data.title, data.description, data.done);
       newTodos.push(newTodo);
       that.setState({
         todos: newTodos,
@@ -110,12 +110,7 @@ var todoFuncs = {
         });
 
         // Create todo
-        var updatedCompletedTodo = {
-          title: data.title,
-          description: data.description,
-          id: data._id,
-          done: data.done
-        };
+        var updatedCompletedTodo = new Todo(data._id, data.title, data.description, data.done);
         updatedCompletedTodos.push(updatedCompletedTodo);
       } else {
         updatedCompletedTodos.forEach(function (todo, index) {
@@ -124,12 +119,7 @@ var todoFuncs = {
           }
         });
         
-        var updatedTodo = {
-          title: data.title,
-          description: data.description,
-          id: data._id,
-          done: data.done
-        };
+        var updatedTodo = new Todo(data._id, data.title, data.description, data.done);
         updatedTodos.push(updatedTodo);
       }
     
