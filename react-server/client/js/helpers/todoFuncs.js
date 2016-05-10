@@ -6,10 +6,13 @@ var Todo = require('../helpers/TodoModel');
 var todoFuncs = {
   
   index: function (that) {
-    var url = '/api/todos.json';    // Path to get all todos from data base
+    // Path to get all todos from data base
+    var url = '/api/todos.json';    
     var data = {};
-    var success = function(data) {  // Ok, data is an object with objects inside i.e. { {...}, {...}, ... }
-      var updatedTodos = Object.assign([], that.state.todos); // We don't want to directly mess with todos on state
+    // Ok, data is an object with objects inside i.e. { {...}, {...}, ... }
+    var success = function(data) {  
+      // We don't want to directly mess with todos on state
+      var updatedTodos = Object.assign([], that.state.todos); 
       var updatedCompletedTodos = Object.assign([], that.state.completedTodos);
       
       // We iterate over the main object 'data' to get access to the other objects
@@ -76,7 +79,6 @@ var todoFuncs = {
     ajax(url, data, success, error);
   },
   
-  // todo: passing in done flag, move to one list or the other
   update: function (that, id, done) {
     var updatedTodos = Object.assign([], that.state.todos);
     var updatedCompletedTodos = Object.assign([], that.state.completedTodos);
@@ -108,8 +110,6 @@ var todoFuncs = {
             updatedTodos.splice(index, 1);
           }
         });
-
-        // Create todo
         var updatedCompletedTodo = new Todo(data._id, data.title, data.description, data.done);
         updatedCompletedTodos.push(updatedCompletedTodo);
       } else {
