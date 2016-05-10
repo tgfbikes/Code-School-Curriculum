@@ -85,60 +85,70 @@ var todoFuncs = {
     var updatedTodos = Object.assign([], that.state.todos);
     var updatedCompletedTodos = Object.assign([], that.state.completedTodos);
     var url = '/api/todos/' + id + '.json';
-    var data = {};
-    
+    var todoData = {};
+
     if (done) {
       // Get from completedTodos
       updatedCompletedTodos.forEach(function (todo) {
         if (todo.id === id) {
-          data = todo;
-          data.done = false;
-        } else {
-          console.log('todo not found in updatedCompletedTodos');
-        }
+          Object.assign(todoData, todo);
+          todoData.done = false;
+        } 
       });
-      
     } else {
       // Get from todos
       updatedTodos.forEach(function (todo) {
         if (todo.id === id) {
-          data = todo;
-          data.done = true;
-        } else {
-          console.log('todo not found in updatedTodos');
-        }
+          Object.assign(todoData, todo);
+          todoData.done = true;
+        } 
       });
     }
 
     var success = function (data) {
       if (data.done) {
-        // updatedTodos.forEach(function (todo, index) {
-        //   if (todo.id === data._id) {
-        //     updatedTodos.splice(index, 1);
-        //   }
-        // });
-        updatedTodos.push(data);
-      } else {
-        // updatedCompletedTodos.forEach(function (todo, index) {
-        //   if (todo.id === data._id) {
-        //     updatedCompletedTodos.splice(index, 1);
-        //   }
-        // });
-        updatedCompletedTodos.push(data);
-      }
+        updatedTodos.forEach(function (todo, index) {
+          if (todo.id === id) {
+            updatedTodos.splice(index, 1);
+          }
+        });
 
+        // Create todo
+        var updatedCompletedTodo = {
+          title: data.title,
+          description: data.description,
+          id: data._id,
+          done: data.done
+        };
+        updatedCompletedTodos.push(updatedCompletedTodo);
+      } else {
+        updatedCompletedTodos.forEach(function (todo, index) {
+          if (todo.id === id) {
+            updatedCompletedTodos.splice(index, 1);
+          }
+        });
+        
+        var updatedTodo = {
+          title: data.title,
+          description: data.description,
+          id: data._id,
+          done: data.done
+        };
+        updatedTodos.push(updatedTodo);
+      }
+    
       that.setState({
         todos: updatedTodos,
         completedTodos: updatedCompletedTodos
       });
     };
-
+    
     var error = function (xhr, status, err) {
       console.log('updated todo failed');
       console.log(err);
     };
-    console.log(data);
-    ajax(url, data, success, error, 'PUT');
+    
+    ajax(url, todoData, success, error, 'PUT');
   },
   
   delete: function (that, id) {
