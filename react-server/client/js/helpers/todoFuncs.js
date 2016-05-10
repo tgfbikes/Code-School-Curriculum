@@ -61,12 +61,7 @@ var todoFuncs = {
 
     var success = function (data) {
       console.log('created todo');
-      var newTodo = {
-        id: data._id,
-        title: data.title,
-        description: data.description,
-        done: data.done
-      };
+      var newTodo = new Todo(data.id, data.title, data.description, data.done);
       newTodos.push(newTodo);
       that.setState({
         todos: newTodos,
