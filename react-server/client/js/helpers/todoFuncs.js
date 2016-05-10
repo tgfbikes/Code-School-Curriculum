@@ -1,26 +1,30 @@
 'use strict';
 
 var ajax = require('./ajax');
+var Todo = require('../helpers/TodoModel');
 
 var todoFuncs = {
   
   index: function (that) {
-    var url = '/api/todos.json';    // Path to get all todos from data base
+    // Path to get all todos from data base
+    var url = '/api/todos.json';    
     var data = {};
-    var success = function(data) {  // Ok, data is an object with objects inside i.e. { {...}, {...}, ... }
-      var updatedTodos = Object.assign([], that.state.todos); // We don't want to directly mess with todos on state
+    // Ok, data is an object with objects inside i.e. { {...}, {...}, ... }
+    var success = function(data) {  
+      // We don't want to directly mess with todos on state
+      var updatedTodos = Object.assign([], that.state.todos); 
       var updatedCompletedTodos = Object.assign([], that.state.completedTodos);
-
-      for (var key in data) {                   // We iterate over the main object 'data' to get access to the other objects
-        if (data.hasOwnProperty(key)) {         // Convention for making sure we don't pull any data from prototype
-          var todoData = data[key];             // Grap the object at data[key] -- key will be the place the object is located
-          var todo = {                          // Create a new todo object literal from each object in data object
-            id: todoData._id,
-            title: todoData.title,
-            description: todoData.description,
-            done: todoData.done
-          };
-          if (todo.done) {                      // Each todo we create, we want to push to updatedTodos or updatedCompletedTodos
+      
+      // We iterate over the main object 'data' to get access to the other objects
+      for (var key in data) {                                                                      
+        // Convention for making sure we don't pull any data from prototype
+        if (data.hasOwnProperty(key)) {                                                            
+          // Grap the object at data[key] -- key will be the place the object is located
+          var todoData = data[key];                                                                
+          // Create a new todo from each object in data object from the TodoModel
+          var todo = new Todo(todoData._id, todoData.title, todoData.description, todoData.done);  
+          // Each todo we create, we want to push to updatedTodos or updatedCompletedTodos
+          if (todo.done) {  
             updatedCompletedTodos.push(todo);
           } else {
             updatedTodos.push(todo);              
@@ -60,12 +64,7 @@ var todoFuncs = {
 
     var success = function (data) {
       console.log('created todo');
-      var newTodo = {
-        id: data._id,
-        title: data.title,
-        description: data.description,
-        done: data.done
-      };
+      var newTodo = new Todo(data._id, data.title, data.description, data.done);
       newTodos.push(newTodo);
       that.setState({
         todos: newTodos,
@@ -80,7 +79,6 @@ var todoFuncs = {
     ajax(url, data, success, error);
   },
   
-  // todo: passing in done flag, move to one list or the other
   update: function (that, id, done) {
     var updatedTodos = Object.assign([], that.state.todos);
     var updatedCompletedTodos = Object.assign([], that.state.completedTodos);
@@ -112,14 +110,7 @@ var todoFuncs = {
             updatedTodos.splice(index, 1);
           }
         });
-
-        // Create todo
-        var updatedCompletedTodo = {
-          title: data.title,
-          description: data.description,
-          id: data._id,
-          done: data.done
-        };
+        var updatedCompletedTodo = new Todo(data._id, data.title, data.description, data.done);
         updatedCompletedTodos.push(updatedCompletedTodo);
       } else {
         updatedCompletedTodos.forEach(function (todo, index) {
@@ -128,12 +119,7 @@ var todoFuncs = {
           }
         });
         
-        var updatedTodo = {
-          title: data.title,
-          description: data.description,
-          id: data._id,
-          done: data.done
-        };
+        var updatedTodo = new Todo(data._id, data.title, data.description, data.done);
         updatedTodos.push(updatedTodo);
       }
     
