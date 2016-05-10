@@ -32,8 +32,7 @@ var TodoCtrl = {
 
   // Update a todo
   update: function (req, res) {
-    var val = req.body.done;
-    Todo.findByIdAndUpdate(req.params.id, {$set: {done: val}}, function (err, todo) {
+    Todo.findByIdAndUpdate(req.params.id, {done: req.body.done}, {new: true}, function (err, todo) {
       if (err) {
         res.status(500).json({
           message: 'Data not found'
