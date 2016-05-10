@@ -1,6 +1,7 @@
 'use strict';
 
 var ajax = require('./ajax');
+var Todo = require('../helpers/TodoModel');
 
 var todoFuncs = {
   
@@ -10,17 +11,17 @@ var todoFuncs = {
     var success = function(data) {  // Ok, data is an object with objects inside i.e. { {...}, {...}, ... }
       var updatedTodos = Object.assign([], that.state.todos); // We don't want to directly mess with todos on state
       var updatedCompletedTodos = Object.assign([], that.state.completedTodos);
-
-      for (var key in data) {                   // We iterate over the main object 'data' to get access to the other objects
-        if (data.hasOwnProperty(key)) {         // Convention for making sure we don't pull any data from prototype
-          var todoData = data[key];             // Grap the object at data[key] -- key will be the place the object is located
-          var todo = {                          // Create a new todo object literal from each object in data object
-            id: todoData._id,
-            title: todoData.title,
-            description: todoData.description,
-            done: todoData.done
-          };
-          if (todo.done) {                      // Each todo we create, we want to push to updatedTodos or updatedCompletedTodos
+      
+      // We iterate over the main object 'data' to get access to the other objects
+      for (var key in data) {                                                                      
+        // Convention for making sure we don't pull any data from prototype
+        if (data.hasOwnProperty(key)) {                                                            
+          // Grap the object at data[key] -- key will be the place the object is located
+          var todoData = data[key];                                                                
+          // Create a new todo from each object in data object from the TodoModel
+          var todo = new Todo(todoData._id, todoData.title, todoData.description, todoData.done);  
+          // Each todo we create, we want to push to updatedTodos or updatedCompletedTodos
+          if (todo.done) {  
             updatedCompletedTodos.push(todo);
           } else {
             updatedTodos.push(todo);              
