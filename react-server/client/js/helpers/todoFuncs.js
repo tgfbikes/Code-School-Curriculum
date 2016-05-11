@@ -137,12 +137,18 @@ var todoFuncs = {
     ajax(url, todoData, success, error, 'PUT');
   },
   
-  delete: function (that, id) {
+  delete: function (that, id, done) {
     var currentTodos = Object.assign([], that.state.todos);
     var url = '/api/todos/' + id + '.json';
     var data = {
       id: id
     };
+    
+    if (done) {
+      // Get from completedTodos
+    } else {
+      // Get from todos
+    }
 
     var success = function (data) {
       console.log('deleted todo');
