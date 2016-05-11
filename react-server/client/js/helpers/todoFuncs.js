@@ -137,21 +137,36 @@ var todoFuncs = {
     ajax(url, todoData, success, error, 'PUT');
   },
   
-  delete: function (that, id) {
+  delete: function (that, id, done) {
     var currentTodos = Object.assign([], that.state.todos);
+    var currentCompletedTodos = Object.assign([], that.state.completedTodos);
     var url = '/api/todos/' + id + '.json';
+    var updatedTodos;
     var data = {
       id: id
     };
-
-    var success = function (data) {
+    
+    var success = function () {
       console.log('deleted todo');
-      var updatedTodos = currentTodos.filter(function (todo) {
-        return todo.id !== id;
-      });
-      that.setState({
-        todos: updatedTodos
-      });
+      if (done) {
+        console.log('done');
+        // Get from completedTodos
+        updatedTodos = currentCompletedTodos.filter(function (todo) {
+          return todo.id !== id;
+        });
+        that.setState({
+          completedTodos: updatedTodos
+        });
+      } else {
+        console.log('not done');
+        // Get from todos
+        updatedTodos = currentTodos.filter(function (todo) {
+          return todo.id !== id;
+        });
+        that.setState({
+          todos: updatedTodos
+        });
+      }
     };
 
     var error = function (xhr, status, err) {

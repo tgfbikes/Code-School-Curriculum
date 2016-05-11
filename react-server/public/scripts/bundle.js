@@ -72,8 +72,8 @@ var Todo = React.createClass({displayName: "Todo",
     todoFuncs.create(this);
   },
 
-  deleteTodo: function(id) {
-    todoFuncs.delete(this, id);
+  deleteTodo: function(id, done) {
+    todoFuncs.delete(this, id, done);
   },
 
   completedTodo: function(id, done) {
@@ -331,10 +331,13 @@ var Todo = require('../helpers/TodoModel');
 var todoFuncs = {
   
   index: function (that) {
-    var url = '/api/todos.json';    // Path to get all todos from data base
+    // Path to get all todos from data base
+    var url = '/api/todos.json';    
     var data = {};
-    var success = function(data) {  // Ok, data is an object with objects inside i.e. { {...}, {...}, ... }
-      var updatedTodos = Object.assign([], that.state.todos); // We don't want to directly mess with todos on state
+    // Ok, data is an object with objects inside i.e. { {...}, {...}, ... }
+    var success = function(data) {  
+      // We don't want to directly mess with todos on state
+      var updatedTodos = Object.assign([], that.state.todos); 
       var updatedCompletedTodos = Object.assign([], that.state.completedTodos);
       
       // We iterate over the main object 'data' to get access to the other objects
@@ -401,7 +404,6 @@ var todoFuncs = {
     ajax(url, data, success, error);
   },
   
-  // todo: passing in done flag, move to one list or the other
   update: function (that, id, done) {
     var updatedTodos = Object.assign([], that.state.todos);
     var updatedCompletedTodos = Object.assign([], that.state.completedTodos);
@@ -433,8 +435,6 @@ var todoFuncs = {
             updatedTodos.splice(index, 1);
           }
         });
-
-        // Create todo
         var updatedCompletedTodo = new Todo(data._id, data.title, data.description, data.done);
         updatedCompletedTodos.push(updatedCompletedTodo);
       } else {
@@ -462,21 +462,36 @@ var todoFuncs = {
     ajax(url, todoData, success, error, 'PUT');
   },
   
-  delete: function (that, id) {
+  delete: function (that, id, done) {
     var currentTodos = Object.assign([], that.state.todos);
+    var currentCompletedTodos = Object.assign([], that.state.completedTodos);
     var url = '/api/todos/' + id + '.json';
+    var updatedTodos;
     var data = {
       id: id
     };
-
-    var success = function (data) {
+    
+    var success = function () {
       console.log('deleted todo');
-      var updatedTodos = currentTodos.filter(function (todo) {
-        return todo.id !== id;
-      });
-      that.setState({
-        todos: updatedTodos
-      });
+      if (done) {
+        console.log('done');
+        // Get from completedTodos
+        updatedTodos = currentCompletedTodos.filter(function (todo) {
+          return todo.id !== id;
+        });
+        that.setState({
+          completedTodos: updatedTodos
+        });
+      } else {
+        console.log('not done');
+        // Get from todos
+        updatedTodos = currentTodos.filter(function (todo) {
+          return todo.id !== id;
+        });
+        that.setState({
+          todos: updatedTodos
+        });
+      }
     };
 
     var error = function (xhr, status, err) {

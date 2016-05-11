@@ -71,8 +71,8 @@ var Todo = React.createClass({
     todoFuncs.create(this);
   },
 
-  deleteTodo: function(id) {
-    todoFuncs.delete(this, id);
+  deleteTodo: function(id, done) {
+    todoFuncs.delete(this, id, done);
   },
 
   completedTodo: function(id, done) {
